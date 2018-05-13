@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="Train"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/train"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:padding="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="From Station"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/from_station"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:padding="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="To Station"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/to_station"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:padding="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="Journey Class"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/journey_class"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:padding="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="Quota"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/quota"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:padding="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Availability"
+        android:textColor="@color/colorWhite"
+        android:textSize="18dp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="Date"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="Status"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+        </TableRow>
+    </TableLayout>
+
+    <ashish.com.myapp1.NonScrollListView
+        android:id="@+id/availabilitylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"></ashish.com.myapp1.NonScrollListView>
+
+</LinearLayout>

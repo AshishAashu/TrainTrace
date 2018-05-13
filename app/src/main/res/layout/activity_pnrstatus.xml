@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="ashish.com.myapp1.PnrFragment">
+
+    <LinearLayout
+        android:id="@+id/pnrstatuslayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/getpnr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/title_background"
+            android:padding="10dp"
+            android:text="Get PNR Status"
+            android:textColor="@color/colorWhite"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/pnrno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="Enter Your PNR"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="10"
+            android:padding="20sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/pnrsubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_style"
+            android:enabled="false"
+            android:padding="10dp"
+            android:text="Get Status"
+            android:textColor="@color/colorWhite" />
+
+        <FrameLayout
+            android:id="@+id/pnrstatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></FrameLayout>
+    </LinearLayout>
+</ScrollView>

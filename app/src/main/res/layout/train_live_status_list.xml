@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:padding="10dp"
+                android:id="@+id/stn_name"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:padding="10dp"
+                android:id="@+id/actuatarrival"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:background="@drawable/left_border_train_live_list"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/actualdeparture"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:padding="10dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:background="@drawable/left_border_train_live_list"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/distance"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="0dip"
+                android:gravity="center_horizontal"
+                android:background="@drawable/left_border_train_live_list"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

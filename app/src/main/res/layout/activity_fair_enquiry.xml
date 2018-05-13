@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="ashish.com.myapp1.FairEnquiryFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/title_background"
+            android:padding="10dp"
+            android:text="Fair Enquiry"
+            android:textColor="@color/colorWhite"
+            android:textSize="18dp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/trainno_actv"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="Enter Train Name/Number"
+            android:imeOptions="actionDone"
+            android:inputType="textAutoComplete"
+            android:padding="20sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+
+        <Spinner
+            android:id="@+id/sourcestn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/deststn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/agetxt"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="Enter Age"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="2"
+            android:padding="20sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+
+        <Spinner
+            android:id="@+id/classcode"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"></Spinner>
+
+        <Spinner
+            android:id="@+id/quota"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"></Spinner>
+
+        <TextView
+            android:id="@+id/datetxt"
+            android:layout_width="246dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/date_view_style"
+            android:padding="20sp"
+            android:text="Select Date"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/fairenquirysubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_style"
+            android:padding="10dp"
+            android:text="Get Fair"
+            android:textColor="@color/colorWhite" />
+
+        <FrameLayout
+            android:id="@+id/fairenquiryresponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></FrameLayout>
+    </LinearLayout>
+
+</ScrollView>

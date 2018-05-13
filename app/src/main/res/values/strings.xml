@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TrainTrace</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string-array name="classcode">
+        <item>SL</item>
+        <item>3A</item>
+        <item>2A</item>
+        <item>1A</item>
+    </string-array>
+    <string-array name="quota">
+        <item>GN</item>
+        <item>TQ</item>
+        <item>PT</item>
+    </string-array>
+</resources>
