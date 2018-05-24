@@ -60,7 +60,7 @@
             android:imeOptions="actionDone"
             android:inputType="number"
             android:maxLength="2"
-            android:padding="20sp"/>
+            android:padding="20sp" />
 
         <Spinner
             android:id="@+id/classcode"
@@ -80,16 +80,28 @@
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"></Spinner>
 
-        <TextView
-            android:id="@+id/datetxt"
+        <LinearLayout
             android:layout_width="246dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/date_view_style"
-            android:padding="20sp"
-            android:text="Select Date"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/datetxt"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/date_view_style"
+                android:padding="20sp"
+                android:text="Select Date" />
+
+            <ImageView
+                android:id="@+id/calenderimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendar" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/fairenquirysubmit"
@@ -102,8 +114,8 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/button_style"
             android:padding="10dp"
-            android:text="Get Fair"
-            android:textColor="@color/colorWhite" />
+            android:fontFamily="monospace"
+            android:text="Get Fair"/>
 
         <FrameLayout
             android:id="@+id/fairenquiryresponse"
