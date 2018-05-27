@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,6 +44,7 @@ import java.util.Map;
 
 import ashish.com.myapp1.Adapter.SourceDestinationAdapter;
 import ashish.com.myapp1.List.SourceDestinationList;
+import ashish.com.myapp1.Manager.MyException;
 import ashish.com.myapp1.Manager.ResponseCodeManager;
 import ashish.com.myapp1.Manager.UrlManager;
 import ashish.com.myapp1.Responses.SeatAvailabilityResponseFragment;
@@ -59,7 +62,9 @@ public class SeatAvailabilityFragment extends Fragment {
     ArrayList<SourceDestinationList> sourcelist;
     SourceDestinationList selected_source, selected_destination;
     String selected_train, selected_class, selected_quota, selected_date;
+    ProgressDialog progressDialog;
     String url = null;
+    ImageView calenderimg;
     int day, month, year;
     HashMap<String, String> submitdata = new HashMap<String, String>();
 
@@ -81,6 +86,7 @@ public class SeatAvailabilityFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (trainno.getText().length() == 5) {
+                    progressDialog.show();
                     selected_train = trainno.getText().toString();
                     source.setEnabled(true);
                     HashMap<String, String> hm = new HashMap<String, String>();
@@ -96,26 +102,31 @@ public class SeatAvailabilityFragment extends Fragment {
                                 int res_code = (new JSONObject(jsonsource).getInt("response_code"));
                                 if (res_code == 200) {
                                     setTrainSourceArrayList(jsonsource);
+                                    source.setVisibility(View.VISIBLE);
+                                    destination.setVisibility(View.VISIBLE);
+                                    progressDialog.dismiss();
                                     showTrainSource();
                                     setSourceSelectListener();
                                 } else {
-                                    Toast.makeText(getActivity(),ResponseCodeManager.responseDescription(res_code),
-                                            Toast.LENGTH_SHORT).show();
+                                    throw new MyException("Error occured..");
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            } catch (Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(getActivity(), "Plz try later...",
+                                        Toast.LENGTH_SHORT).show();
                             }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Plz try later...", Toast.LENGTH_SHORT).show();
                         }
                     });
                     VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
                 } else {
-                    source.setEnabled(false);
-                    destination.setEnabled(false);
+                    source.setVisibility(View.GONE);
+                    destination.setVisibility(View.GONE);
                     selected_train = null;
                 }
             }
@@ -214,32 +225,39 @@ public class SeatAvailabilityFragment extends Fragment {
         seatavailabilitysubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getActivity(),"Clicked",Toast.LENGTH_LONG).show();
                 setSubmitData();
-                url = UrlManager.makeUrl("seatavailability",submitdata);
-
-                Toast.makeText(getActivity(),submitdata.toString()+url,Toast.LENGTH_LONG).show();
-//                url = "http://dummy.restapiexample.com/api/v1/employee/1";
+                url = UrlManager.makeUrl("seatavailability", submitdata);
                 if (isSubmitDataSet()) {
+                    progressDialog.show();
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    String data = response.toString();
-                                    Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
-                                    jsonObject = response;
-                                    Bundle b = new Bundle();
-                                    b.putString("data", data);
-                                    SeatAvailabilityResponseFragment seatAvailabilityResponseFragment =
-                                            new SeatAvailabilityResponseFragment();
-                                    seatAvailabilityResponseFragment.setArguments(b);
-                                    loadFragment(seatAvailabilityResponseFragment);
-                                    Toast.makeText(getActivity(), submitdata.toString(), Toast.LENGTH_SHORT).show();
+                                    try {
+                                        if (response.getInt("response_code") == 200) {
+                                            String data = response.toString();
+                                            jsonObject = response;
+                                            Bundle b = new Bundle();
+                                            b.putString("data", data);
+                                            SeatAvailabilityResponseFragment seatAvailabilityResponseFragment =
+                                                    new SeatAvailabilityResponseFragment();
+                                            seatAvailabilityResponseFragment.setArguments(b);
+                                            loadFragment(seatAvailabilityResponseFragment);
+                                        }
+                                        else{
+                                            throw new MyException("Error occured...");
+                                        }
+                                    } catch (Exception e) {
+
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getActivity(),"Plz try later...", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(),"Plz try later...", Toast.LENGTH_SHORT).show();
                         }
                     });
                     VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
@@ -276,6 +294,7 @@ public class SeatAvailabilityFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.seatavailabilityresponse, fragment);
         fragmentTransaction.commit();
+        progressDialog.dismiss();
     }
 
     public void findFieldbyId(View view) {
@@ -285,6 +304,11 @@ public class SeatAvailabilityFragment extends Fragment {
         destination = (Spinner) view.findViewById(R.id.deststn);
         classcode = (Spinner) view.findViewById(R.id.classcode);
         quota = (Spinner) view.findViewById(R.id.quota);
+        calenderimg = (ImageView) view.findViewById(R.id.calenderimg);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Please  wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
         seatavailabilitysubmit = (Button) view.findViewById(R.id.seatavailabilitysubmit);
         seatavailabilityresponse = (FrameLayout) view.findViewById(R.id.seatavailabilityresponse);
         datetxt.setInputType(InputType.TYPE_NULL);
@@ -321,7 +345,7 @@ public class SeatAvailabilityFragment extends Fragment {
 
             }
         });
-        datetxt.setOnClickListener(new View.OnClickListener() {
+        calenderimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();

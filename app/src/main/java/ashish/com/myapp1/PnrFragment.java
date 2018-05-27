@@ -3,6 +3,7 @@ package ashish.com.myapp1;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import ashish.com.myapp1.Manager.MyException;
 import ashish.com.myapp1.Manager.UrlManager;
 import ashish.com.myapp1.Responses.PnrStatusResponseFragment;
 
@@ -37,6 +39,7 @@ public class PnrFragment extends Fragment {
     EditText pnrno;
     FrameLayout pnrstatus;
     JSONObject jsonObject;
+    ProgressDialog progressDialog;
     String url="http://dummy.restapiexample.com/api/v1/employee/1";
     @Nullable
     @Override
@@ -70,27 +73,41 @@ public class PnrFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(pnrno.getText().length()==10) {
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setTitle("Please  wait...");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.show();
                     Map<String,String > data = mapData();
-                   url = UrlManager.makeUrl("pnrstatus", (HashMap<String, String>) data);
-                    Toast.makeText(getActivity(),url+"\n"+data.toString(),Toast.LENGTH_SHORT).show();
+                    url = UrlManager.makeUrl("pnrstatus", (HashMap<String, String>) data);
                     JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,
                             url, null,
                             new Response.Listener<JSONObject>() {
 
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    String pnr= response.toString();
-                                    Toast.makeText(getActivity(),pnr,Toast.LENGTH_SHORT).show();
-                                    Bundle b =new Bundle();
-                                    b.putString("data",pnr);
-                                    PnrStatusResponseFragment pnrStatusResponseFragment=new PnrStatusResponseFragment();
-                                    pnrStatusResponseFragment.setArguments(b);
-                                    loadFragment(pnrStatusResponseFragment);
+                                    try {
+                                        if(response.getInt("response_code")==200) {
+                                            String pnr = response.toString();
+//                                            Toast.makeText(getActivity(), pnr, Toast.LENGTH_SHORT).show();
+                                            Bundle b = new Bundle();
+                                            b.putString("data", pnr);
+                                            PnrStatusResponseFragment pnrStatusResponseFragment = new PnrStatusResponseFragment();
+                                            pnrStatusResponseFragment.setArguments(b);
+                                            loadFragment(pnrStatusResponseFragment);
+                                        }
+                                        else{
+                                            throw new MyException("Response Error.");
+                                        }
+                                    } catch (Exception e) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getActivity(), "plz try after some time...", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-
+                                progressDialog.dismiss();
+                                Toast.makeText(getActivity(), "plz try after some time...", Toast.LENGTH_SHORT).show();
                             }
                     });
                     VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
@@ -106,6 +123,7 @@ public class PnrFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.pnrstatus, fragment);
         fragmentTransaction.commit();
+        progressDialog.dismiss();
     }
     private Map<String,String > mapData(){
         String pnr_no = pnrno.getText().toString();

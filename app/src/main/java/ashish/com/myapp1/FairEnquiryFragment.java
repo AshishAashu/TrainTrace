@@ -1,6 +1,7 @@
 package ashish.com.myapp1;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -37,6 +38,7 @@ import ashish.com.myapp1.Adapter.TrainAutoCompleteAdapter;
 import ashish.com.myapp1.List.SourceDestinationList;
 import ashish.com.myapp1.List.SuggestionList;
 import ashish.com.myapp1.List.TrainList;
+import ashish.com.myapp1.Manager.MyException;
 import ashish.com.myapp1.Manager.ResponseCodeManager;
 import ashish.com.myapp1.Manager.UrlManager;
 
@@ -55,6 +57,7 @@ public class FairEnquiryFragment extends Fragment {
     TrainAutoCompleteAdapter taca;
     SourceDestinationAdapter sda;
     SourceDestinationList selected_source,selected_destination;
+    ProgressDialog progressDialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -71,6 +74,9 @@ public class FairEnquiryFragment extends Fragment {
         quota = (Spinner) view.findViewById(R.id.quota);
         age = (EditText) view.findViewById(R.id.agetxt);
         datetxt = (TextView) view.findViewById(R.id.datetxt);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Please  wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         taca = new TrainAutoCompleteAdapter(getActivity().getApplicationContext(),android.R.layout.simple_dropdown_item_1line);
         taca.setV(view);
         traintxt_tv.setAdapter(taca);
@@ -90,159 +96,16 @@ public class FairEnquiryFragment extends Fragment {
     }
 
     private void getTrainRouteArrayList(){
+        progressDialog.show();
         HashMap<String, String> hm = new HashMap<String, String>();
         hm.put("trainno", traintxt_tv.getText().toString().split("-")[1]);
         url = UrlManager.makeUrl("trainroute", hm);
-        Toast.makeText(getActivity(), url, Toast.LENGTH_SHORT).show();
-        url = "http://dummy.restapiexample.com/api/v1/employee/1";
+        Toast.makeText(getActivity(),url, Toast.LENGTH_SHORT).show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                String jsonsource = "{\n" +
-                        "  \"response_code\": 200,\n" +
-                        "  \"debit\": 1,\n" +
-                        "  \"train\": {\n" +
-                        "    \"name\": \"KLK-NDLS SHATABDI EXP\",\n" +
-                        "    \"number\": \"12006\",\n" +
-                        "    \"days\": [\n" +
-                        "      {\n" +
-                        "        \"code\": \"MON\",\n" +
-                        "        \"runs\": \"Y\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"TUE\",\n" +
-                        "        \"runs\": \"Y\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"WED\",\n" +
-                        "        \"runs\": \"Y\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"THU\",\n" +
-                        "        \"runs\": \"Y\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"FRI\",\n" +
-                        "        \"runs\": \"Y\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"SAT\",\n" +
-                        "        \"runs\": \"Y\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"SUN\",\n" +
-                        "        \"runs\": \"Y\"\n" +
-                        "      }\n" +
-                        "    ],\n" +
-                        "    \"classes\": [\n" +
-                        "      {\n" +
-                        "        \"code\": \"3A\",\n" +
-                        "        \"available\": \"N\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"SL\",\n" +
-                        "        \"available\": \"N\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"1A\",\n" +
-                        "        \"available\": \"N\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"2S\",\n" +
-                        "        \"available\": \"N\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"FC\",\n" +
-                        "        \"available\": \"N\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"2A\",\n" +
-                        "        \"available\": \"N\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"CC\",\n" +
-                        "        \"available\": \"N\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"code\": \"3E\",\n" +
-                        "        \"available\": \"N\"\n" +
-                        "      }\n" +
-                        "    ]\n" +
-                        "  },\n" +
-                        "\n" +
-                        "  \"route\": [\n" +
-                        "    {\n" +
-                        "      \"no\": 1,\n" +
-                        "      \"scharr\": \"SOURCE\",\n" +
-                        "      \"schdep\": \"06:15\",\n" +
-                        "      \"distance\": 0,\n" +
-                        "      \"halt\": -1,\n" +
-                        "      \"day\": 1,\n" +
-                        "      \"station\": {\n" +
-                        "        \"name\": \"KALKA\",\n" +
-                        "        \"code\": \"KLK\",\n" +
-                        "        \"lng\": null,\n" +
-                        "        \"lat\": null\n" +
-                        "      }\n" +
-                        "    },\n" +
-                        "    {\n" +
-                        "      \"no\": 2,\n" +
-                        "      \"scharr\": \"06:45\",\n" +
-                        "      \"schdep\": \"06:53\",\n" +
-                        "      \"distance\": 37,\n" +
-                        "      \"halt\": 8,\n" +
-                        "      \"day\": 1,\n" +
-                        "      \"station\": {\n" +
-                        "        \"name\": \"CHANDIGARH\",\n" +
-                        "        \"code\": \"CDG\",\n" +
-                        "        \"lng\": null,\n" +
-                        "        \"lat\": null\n" +
-                        "      }\n" +
-                        "    },\n" +
-                        "    {\n" +
-                        "      \"no\": 3,\n" +
-                        "      \"scharr\": \"07:33\",\n" +
-                        "      \"schdep\": \"07:38\",\n" +
-                        "      \"distance\": 104,\n" +
-                        "      \"halt\": 5,\n" +
-                        "      \"day\": 1,\n" +
-                        "      \"station\": {\n" +
-                        "        \"name\": \"AMBALA CANT JN\",\n" +
-                        "        \"code\": \"UMB\",\n" +
-                        "        \"lng\": null,\n" +
-                        "        \"lat\": null\n" +
-                        "      }\n" +
-                        "    },\n" +
-                        "    {\n" +
-                        "      \"no\": 4,\n" +
-                        "      \"scharr\": \"08:10\",\n" +
-                        "      \"schdep\": \"08:12\",\n" +
-                        "      \"distance\": 146,\n" +
-                        "      \"halt\": 2,\n" +
-                        "      \"day\": 1,\n" +
-                        "      \"station\": {\n" +
-                        "        \"name\": \"KURUKSHETRA JN\",\n" +
-                        "        \"code\": \"KKDE\",\n" +
-                        "        \"lng\": null,\n" +
-                        "        \"lat\": null\n" +
-                        "      }\n" +
-                        "    },\n" +
-                        "    {\n" +
-                        "      \"no\": 5,\n" +
-                        "      \"scharr\": \"10:20\",\n" +
-                        "      \"schdep\": \"DEST\",\n" +
-                        "      \"distance\": 302,\n" +
-                        "      \"halt\": -1,\n" +
-                        "      \"day\": 1,\n" +
-                        "      \"station\": {\n" +
-                        "        \"name\": \"NEW DELHI\",\n" +
-                        "        \"code\": \"NDLS\",\n" +
-                        "        \"lng\": null,\n" +
-                        "        \"lat\": null\n" +
-                        "      }\n" +
-                        "    }\n" +
-                        "  ]\n" +
-                        "}";
+                String jsonsource = response.toString();
+                Toast.makeText(getActivity(),jsonsource, Toast.LENGTH_SHORT).show();
                 try {
                     int res_code = (new JSONObject(jsonsource).getInt("response_code"));
                     if (res_code == 200) {
@@ -256,19 +119,20 @@ public class FairEnquiryFragment extends Fragment {
                                     trainnamesource.getString("code")));
                         }
                         showTrainSource();
-//                        setSourceSelectListener();
                     } else {
-                        Toast.makeText(getActivity(),ResponseCodeManager.responseDescription(res_code),
-                                Toast.LENGTH_SHORT).show();
+
+                        throw new MyException("Error");
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(),"Plz try later...", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),"Plz try later...", Toast.LENGTH_SHORT).show();
             }
         });
         VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
@@ -277,6 +141,8 @@ public class FairEnquiryFragment extends Fragment {
     private void showTrainSource(){
         sda = new SourceDestinationAdapter(getActivity().getApplicationContext(), trainroutelist);
         sourcestn.setAdapter(adapter);
+        setSourceSelectListener();
+        progressDialog.dismiss();
     }
 
     private void setSourceSelectListener(){
@@ -323,360 +189,5 @@ public class FairEnquiryFragment extends Fragment {
         });
     }
 
-//    private void setListenerOnTrainNo(){
-//        trainno.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (trainno.getText().length() > 2 && trainno.getText().length()<5) {
-//                    changeText = 0;
-//                    url = "http://dummy.restapiexample.com/api/v1/employee/1";
-//                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//                        @Override
-//                        public void onResponse(JSONObject response) {
-//                            String jsonsource = "{\n" +
-//                                    "  \"response_code\": 200,\n" +
-//                                    "  \"debit\": 1,\n" +
-//                                    "  \"total\": 4,\n" +
-//                                    "  \"trains\": [\n" +
-//                                    "    {\n" +
-//                                    "      \"number\": \"12559\",\n" +
-//                                    "      \"name\": \"SHIV GANGA EXP\"\n" +
-//                                    "    },\n" +
-//                                    "    {\n" +
-//                                    "      \"number\": \"12560\",\n" +
-//                                    "      \"name\": \"SHIV GANGA EXP\"\n" +
-//                                    "    },\n" +
-//                                    "    {\n" +
-//                                    "      \"number\": \"52451\",\n" +
-//                                    "      \"name\": \"SHIVALK DLX EXP\"\n" +
-//                                    "    },\n" +
-//                                    "    {\n" +
-//                                    "      \"number\": \"52452\",\n" +
-//                                    "      \"name\": \"SHIVALK DLX EXP\"\n" +
-//                                    "    }\n" +
-//                                    "  ]\n" +
-//                                    "}";
-//                            try {
-//                                int res_code = (new JSONObject(jsonsource).getInt("response_code"));
-//                                if (res_code == 200) {
-//                                    JSONArray trainsarr = new JSONObject(jsonsource).getJSONArray("trains");
-//                                    showSuggestionList(trainsarr);
-//                                } else {
-//                                    Toast.makeText(getActivity(), ResponseCodeManager.responseDescription(res_code),
-//                                            Toast.LENGTH_SHORT).show();
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }, new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError error) {
-//                            Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                    VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-//    }
-//    private void showSuggestionList(JSONArray trainsarr) throws JSONException {
-//        JSONObject train = null;
-//        ArrayList suggestions = new ArrayList<SuggestionList>();
-//        for (int i = 0; i < trainsarr.length(); i++) {
-//            train = trainsarr.getJSONObject(i);
-////                                    Toast.makeText(getActivity(),train.toString(),Toast.LENGTH_SHORT).show();
-//            suggestions.add(new SuggestionList((i + 1), train.getString("name"),
-//                    train.getString("number")));
-//        }
-//        adapter = new SuggestionListAdapter(getActivity().getApplicationContext(), suggestions);
-//        suggestionlist.setAdapter(adapter);
-//        suggestionlist.setVisibility(View.VISIBLE);
-//        setSuggestionSelectListener();
-//    }
-//
-//    private void setSuggestionSelectListener() {
-//        suggestionlist.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if(++changeText>1) {
-//                    selected_train = (SuggestionList) parent.getItemAtPosition(position);
-//                    trainno.setText(selected_train.getNumber());
-////                    setSourceStation();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//    }
-//    private void setSourceStation(){
-//        selectedtrain = selected_train.getNumber();
-//        sourcestn.setEnabled(true);
-//        HashMap<String, String> hm = new HashMap<String, String>();
-//        hm.put("trainno", selectedtrain);
-//        url = UrlManager.makeUrl("trainroute", hm);
-//        Toast.makeText(getActivity(), url, Toast.LENGTH_SHORT).show();
-//        url = "http://dummy.restapiexample.com/api/v1/employee/1";
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                String jsonsource = "{\n" +
-//                        "  \"response_code\": 200,\n" +
-//                        "  \"debit\": 1,\n" +
-//                        "  \"train\": {\n" +
-//                        "    \"name\": \"KLK-NDLS SHATABDI EXP\",\n" +
-//                        "    \"number\": \"12006\",\n" +
-//                        "    \"days\": [\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"MON\",\n" +
-//                        "        \"runs\": \"Y\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"TUE\",\n" +
-//                        "        \"runs\": \"Y\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"WED\",\n" +
-//                        "        \"runs\": \"Y\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"THU\",\n" +
-//                        "        \"runs\": \"Y\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"FRI\",\n" +
-//                        "        \"runs\": \"Y\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"SAT\",\n" +
-//                        "        \"runs\": \"Y\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"SUN\",\n" +
-//                        "        \"runs\": \"Y\"\n" +
-//                        "      }\n" +
-//                        "    ],\n" +
-//                        "    \"classes\": [\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"3A\",\n" +
-//                        "        \"available\": \"N\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"SL\",\n" +
-//                        "        \"available\": \"N\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"1A\",\n" +
-//                        "        \"available\": \"N\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"2S\",\n" +
-//                        "        \"available\": \"N\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"FC\",\n" +
-//                        "        \"available\": \"N\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"2A\",\n" +
-//                        "        \"available\": \"N\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"CC\",\n" +
-//                        "        \"available\": \"N\"\n" +
-//                        "      },\n" +
-//                        "      {\n" +
-//                        "        \"code\": \"3E\",\n" +
-//                        "        \"available\": \"N\"\n" +
-//                        "      }\n" +
-//                        "    ]\n" +
-//                        "  },\n" +
-//                        "\n" +
-//                        "  \"route\": [\n" +
-//                        "    {\n" +
-//                        "      \"no\": 1,\n" +
-//                        "      \"scharr\": \"SOURCE\",\n" +
-//                        "      \"schdep\": \"06:15\",\n" +
-//                        "      \"distance\": 0,\n" +
-//                        "      \"halt\": -1,\n" +
-//                        "      \"day\": 1,\n" +
-//                        "      \"station\": {\n" +
-//                        "        \"name\": \"KALKA\",\n" +
-//                        "        \"code\": \"KLK\",\n" +
-//                        "        \"lng\": null,\n" +
-//                        "        \"lat\": null\n" +
-//                        "      }\n" +
-//                        "    },\n" +
-//                        "    {\n" +
-//                        "      \"no\": 2,\n" +
-//                        "      \"scharr\": \"06:45\",\n" +
-//                        "      \"schdep\": \"06:53\",\n" +
-//                        "      \"distance\": 37,\n" +
-//                        "      \"halt\": 8,\n" +
-//                        "      \"day\": 1,\n" +
-//                        "      \"station\": {\n" +
-//                        "        \"name\": \"CHANDIGARH\",\n" +
-//                        "        \"code\": \"CDG\",\n" +
-//                        "        \"lng\": null,\n" +
-//                        "        \"lat\": null\n" +
-//                        "      }\n" +
-//                        "    },\n" +
-//                        "    {\n" +
-//                        "      \"no\": 3,\n" +
-//                        "      \"scharr\": \"07:33\",\n" +
-//                        "      \"schdep\": \"07:38\",\n" +
-//                        "      \"distance\": 104,\n" +
-//                        "      \"halt\": 5,\n" +
-//                        "      \"day\": 1,\n" +
-//                        "      \"station\": {\n" +
-//                        "        \"name\": \"AMBALA CANT JN\",\n" +
-//                        "        \"code\": \"UMB\",\n" +
-//                        "        \"lng\": null,\n" +
-//                        "        \"lat\": null\n" +
-//                        "      }\n" +
-//                        "    },\n" +
-//                        "    {\n" +
-//                        "      \"no\": 4,\n" +
-//                        "      \"scharr\": \"08:10\",\n" +
-//                        "      \"schdep\": \"08:12\",\n" +
-//                        "      \"distance\": 146,\n" +
-//                        "      \"halt\": 2,\n" +
-//                        "      \"day\": 1,\n" +
-//                        "      \"station\": {\n" +
-//                        "        \"name\": \"KURUKSHETRA JN\",\n" +
-//                        "        \"code\": \"KKDE\",\n" +
-//                        "        \"lng\": null,\n" +
-//                        "        \"lat\": null\n" +
-//                        "      }\n" +
-//                        "    },\n" +
-//                        "    {\n" +
-//                        "      \"no\": 5,\n" +
-//                        "      \"scharr\": \"10:20\",\n" +
-//                        "      \"schdep\": \"DEST\",\n" +
-//                        "      \"distance\": 302,\n" +
-//                        "      \"halt\": -1,\n" +
-//                        "      \"day\": 1,\n" +
-//                        "      \"station\": {\n" +
-//                        "        \"name\": \"NEW DELHI\",\n" +
-//                        "        \"code\": \"NDLS\",\n" +
-//                        "        \"lng\": null,\n" +
-//                        "        \"lat\": null\n" +
-//                        "      }\n" +
-//                        "    }\n" +
-//                        "  ]\n" +
-//                        "}";
-//                try {
-//                    int res_code = (new JSONObject(jsonsource).getInt("response_code"));
-//                    if (res_code == 200) {
-//                        setTrainSourceArrayList(jsonsource);
-//                        showTrainSource();
-//                        setSourceSelectListener();
-//                    } else {
-//                        Toast.makeText(getActivity(),ResponseCodeManager.responseDescription(res_code),
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-//    }
-//    private void setTrainSourceArrayList(String data) throws JSONException {
-//        JSONObject trainnamesource = new JSONObject(data);
-//        sourcelist = new ArrayList<>();
-//        JSONArray trainsourceobjarray = trainnamesource.getJSONArray("route");
-//        for (int i = 0; i < trainsourceobjarray.length(); i++) {
-//            trainnamesource = trainsourceobjarray.getJSONObject(i);
-//            trainnamesource = trainnamesource.getJSONObject("station");
-//            sourcelist.add(new SourceDestinationList(i, trainnamesource.getString("name"),
-//                    trainnamesource.getString("code")));
-//        }
-//    }
-//
-//    private void showTrainSource() {
-//        ArrayList<SourceDestinationList> showsourcelist = new ArrayList<SourceDestinationList>();
-//        for (int i = 0; i < sourcelist.size() - 1; i++) {
-//            showsourcelist.add(sourcelist.get(i));
-//        }
-//        sourceDestinationAdapter = new SourceDestinationAdapter(getActivity().getApplicationContext(), showsourcelist);
-//        sourcestn.setAdapter(adapter);
-//    }
-//    private void setSourceSelectListener() {
-//        if (sourcestn.isEnabled()) {
-//            sourcestn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                    try {
-//                        SourceDestinationList obj = (SourceDestinationList) parent.getItemAtPosition(position);
-//                        selected_source = obj;
-//                        showTrainDestination();
-//                    } catch (Exception e) {
-//                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onNothingSelected(AdapterView<?> parent) {
-//
-//                }
-//            });
-//        }
-//    }
-//    private void showTrainDestination() {
-//        destinationstn.setEnabled(true);
-//        ArrayList<SourceDestinationList> showdestinationlist = new ArrayList<SourceDestinationList>();
-//        boolean find = false;
-//        for (int i = 0; i < sourcelist.size(); i++) {
-//            if (find) {
-//                showdestinationlist.add(sourcelist.get(i));
-//            } else {
-//                if (sourcelist.get(i).getCode().equals(selected_source.getCode())) {
-//                    find = true;
-//                }
-//            }
-//        }
-//        sourceDestinationAdapter = new SourceDestinationAdapter(getActivity().getApplicationContext(), showdestinationlist);
-//        destinationstn.setAdapter(adapter);
-//        setDestinationSelectListener();
-//    }
-//    private void setDestinationSelectListener() {
-//        if (destinationstn.isEnabled()) {
-//            destinationstn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                    try {
-//                        SourceDestinationList obj = (SourceDestinationList) parent.getItemAtPosition(position);
-//                        selected_destination = obj;
-//                        datetxt.setEnabled(true);
-//                    } catch (Exception e) {
-//                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onNothingSelected(AdapterView<?> parent) {
-//
-//                }
-//            });
-//        }
-//    }
+
 }

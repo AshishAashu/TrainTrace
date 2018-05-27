@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -32,6 +35,7 @@ import java.util.Map;
 
 import ashish.com.myapp1.Adapter.StationAutoCompleteAdapter;
 import ashish.com.myapp1.List.StationList;
+import ashish.com.myapp1.Manager.MyException;
 import ashish.com.myapp1.Manager.UrlManager;
 import ashish.com.myapp1.Responses.PnrStatusResponseFragment;
 import ashish.com.myapp1.Responses.TrainBetStationResponseFragment;
@@ -45,7 +49,8 @@ public class TrainBwtStationFragment extends Fragment {
     StationList selected_source, selected_dest;
     String selected_date;
     FrameLayout trainbwtstnresponse;
-
+    ImageView calenderimg;
+    ProgressDialog progressDialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +65,10 @@ public class TrainBwtStationFragment extends Fragment {
         datetxt = view.findViewById(R.id.datetxt);
         trainbetstnsubmit = view.findViewById(R.id.trainbwtsubmit);
         trainbwtstnresponse = view.findViewById(R.id.trainbwtstationresponse);
+        calenderimg = view.findViewById(R.id.calenderimg);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Please  wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         saca = new StationAutoCompleteAdapter(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line);
         saca.setV(view);
         sourcestn.setAdapter(saca);
@@ -71,7 +80,7 @@ public class TrainBwtStationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selected_source = (StationList) parent.getItemAtPosition(position);
-                Toast.makeText(getActivity(), selected_source.getStationcode(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), selected_source.getStationcode(), Toast.LENGTH_SHORT).show();
                 if (!destinationstn.isEnabled())
                     destinationstn.setEnabled(true);
                 saca = new StationAutoCompleteAdapter(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line);
@@ -97,7 +106,7 @@ public class TrainBwtStationFragment extends Fragment {
     }
 
     private void setDateTxtOnClickListener() {
-        datetxt.setOnClickListener(new View.OnClickListener() {
+        calenderimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
@@ -137,28 +146,39 @@ public class TrainBwtStationFragment extends Fragment {
         trainbetstnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 Map<String, String> data = mapData();
                 String url = UrlManager.makeUrl("trainbetstation", (HashMap<String, String>) data);
-                Toast.makeText(getActivity(), url + "\n" + data.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), url + "\n" + data.toString(), Toast.LENGTH_LONG).show();
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                         url, null,
                         new Response.Listener<JSONObject>() {
 
                             @Override
                             public void onResponse(JSONObject response) {
-                                String res = response.toString();
-                                Toast.makeText(getActivity(), res, Toast.LENGTH_LONG).show();
-                                Bundle b = new Bundle();
-                                b.putString("data", res);
-                                TrainBetStationResponseFragment trainBetStationResponseFragment =
-                                        new TrainBetStationResponseFragment();
-                                trainBetStationResponseFragment.setArguments(b);
-                                loadFragment(trainBetStationResponseFragment);
+                                try {
+                                    if(response.getInt("response_code")!= 200) {
+                                        String res = response.toString();
+                                        //Toast.makeText(getActivity(), res, Toast.LENGTH_LONG).show();
+                                        Bundle b = new Bundle();
+                                        b.putString("data", res);
+                                        TrainBetStationResponseFragment trainBetStationResponseFragment =
+                                                new TrainBetStationResponseFragment();
+                                        trainBetStationResponseFragment.setArguments(b);
+                                        loadFragment(trainBetStationResponseFragment);
+                                    }else{
+                                        throw new MyException("Response Error");
+                                    }
+                                } catch (Exception e) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getActivity(), "plz try after some time...", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "plz try after some time...", Toast.LENGTH_SHORT).show();
                     }
                 });
                 VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
@@ -171,6 +191,7 @@ public class TrainBwtStationFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.pnrstatus, fragment);
         fragmentTransaction.commit();
+        progressDialog.dismiss();
     }
 
     private Map<String, String> mapData() {

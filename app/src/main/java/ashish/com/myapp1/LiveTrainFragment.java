@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -35,6 +38,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import ashish.com.myapp1.Manager.MyException;
 import ashish.com.myapp1.Manager.UrlManager;
 import ashish.com.myapp1.Responses.LiveTrainStatusResponseFragment;
 import ashish.com.myapp1.Responses.SeatAvailabilityResponseFragment;
@@ -46,6 +50,8 @@ public class LiveTrainFragment extends Fragment {
     EditText trainno;
     TextView datetxt;
     Button livetrainsubmit;
+    ImageView calenderimg;
+    ProgressDialog progressDialog;
     FrameLayout livetrainresponse;
     Calendar cal;
     int year,month,day;
@@ -66,6 +72,10 @@ public class LiveTrainFragment extends Fragment {
         datetxt = (TextView)view.findViewById(R.id.traindepdate);
         livetrainresponse = (FrameLayout)view.findViewById(R.id.livetrainresponse);
         livetrainsubmit = (Button)view.findViewById(R.id.livetrainsubmit);
+        calenderimg = (ImageView) view.findViewById(R.id.calenderimg);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Please  wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         setTrainNoOnTypeListener();
         setDateDialog();
         setLiveTrainSubmitListener();
@@ -98,29 +108,37 @@ public class LiveTrainFragment extends Fragment {
         livetrainsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 setSubmitData();
                 url = UrlManager.makeUrl("livetrainstatus",submitdata);
-//                Toast.makeText(getActivity(),submitdata.toString()+url,Toast.LENGTH_LONG).show();
-//                url = "http://dummy.restapiexample.com/api/v1/employee/1";
                 if(isSubmitDataSet()) {
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    String data = response.toString();
-                                    Toast.makeText(getActivity(),data,Toast.LENGTH_LONG).show();
-                                    Bundle b = new Bundle();
-                                    b.putString("data", data);
-                                    LiveTrainStatusResponseFragment liveTrainStatusResponseFragment =
-                                            new LiveTrainStatusResponseFragment();
-                                    liveTrainStatusResponseFragment.setArguments(b);
-                                    loadFragment(liveTrainStatusResponseFragment);
-                                    Toast.makeText(getActivity(), submitdata.toString(), Toast.LENGTH_SHORT).show();
+                                    try {
+                                        if (response.getInt("response_code") == 200) {
+                                            String data = response.toString();
+                                            Bundle b = new Bundle();
+                                            b.putString("data", data);
+                                            LiveTrainStatusResponseFragment liveTrainStatusResponseFragment =
+                                                    new LiveTrainStatusResponseFragment();
+                                            liveTrainStatusResponseFragment.setArguments(b);
+                                            loadFragment(liveTrainStatusResponseFragment);
+                                        }
+                                        else{
+                                            throw new MyException("Response Error");
+                                        }
+                                    } catch (Exception e) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getActivity(),"Plz Try after Some Time...",Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(),"Plz Try after Some Time...",Toast.LENGTH_LONG).show();
                         }
                     });
                     VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
@@ -131,7 +149,7 @@ public class LiveTrainFragment extends Fragment {
         });
     }
     private void setDateDialog() {
-        datetxt.setOnClickListener(new View.OnClickListener() {
+        calenderimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cal = Calendar.getInstance();
@@ -178,5 +196,6 @@ public class LiveTrainFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.livetrainresponse, fragment);
         fragmentTransaction.commit();
+        progressDialog.dismiss();
     }
 }

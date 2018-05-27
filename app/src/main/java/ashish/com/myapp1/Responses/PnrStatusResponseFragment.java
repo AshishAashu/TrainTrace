@@ -81,7 +81,7 @@ public class PnrStatusResponseFragment extends Fragment {
 
         //Journey Class
         temp=(JSONObject) jsobj.get("journey_class");
-        journey_class.setText(temp.get("name").toString()+" [ "+temp.get("code").toString()+" ]");
+        journey_class.setText(temp.get("code").toString());
 
         passengerLists = new ArrayList<PassengerList>();
 

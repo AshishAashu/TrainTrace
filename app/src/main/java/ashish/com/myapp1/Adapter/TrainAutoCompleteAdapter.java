@@ -1,5 +1,6 @@
 package ashish.com.myapp1.Adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ public class TrainAutoCompleteAdapter extends ArrayAdapter<TrainList> {
     List<TrainList> trainLists;
     View v;
     Context context;
+    ProgressDialog progressDialog;
 
     public TrainAutoCompleteAdapter(@NonNull Context context, int resource) {
         super(context, resource);
@@ -60,20 +62,23 @@ public class TrainAutoCompleteAdapter extends ArrayAdapter<TrainList> {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint != null && constraint.toString().length() > 2 && constraint.toString().length() <= 5) {
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setTitle("Please  wait...");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 trainLists.clear();
                 String trainkey = constraint.toString();
-
                 FilterResults filterResults = new FilterResults();
                 try {
                     trainLists = (ArrayList<TrainList>) new TrainSuggestionList().execute(trainkey).get();
 //                    Toast.makeText(getContext().getApplicationContext(),trainLists.toString(),Toast.LENGTH_SHORT).show();
                     filterResults.values = trainLists;
                     filterResults.count = trainLists.size();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+                progressDialog.dismiss();
                 return filterResults;
             } else {
                 return new FilterResults();

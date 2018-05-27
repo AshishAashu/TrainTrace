@@ -8,4 +8,8 @@
     <color name="colorPink">#AAFF4081</color>
     <color name="colorWhite">#fdfdfb</color>
     <color name="colorDarkGrey">#9e9e9b</color>
+    <color name="btn_dis_success">#48c154</color>
+    <color name="btn_success">#259b31</color>
+    <color name="colorWrite1">#d4de032f</color>
+    <color name="colorWrite2">#f43d0b</color>
 </resources>
