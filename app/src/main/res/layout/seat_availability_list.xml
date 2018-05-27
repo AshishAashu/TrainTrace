@@ -14,20 +14,20 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/status"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="2"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textColor="@color/colorWrite1"
+                android:textSize="12dp" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

@@ -22,7 +22,7 @@
                 android:id="@+id/stn_name"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorWrite1"
                 android:textSize="15sp" />
             <TextView
                 android:layout_height="fill_parent"
@@ -33,7 +33,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:background="@drawable/left_border_train_live_list"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorWrite1"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/actualdeparture"
@@ -44,7 +44,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:background="@drawable/left_border_train_live_list"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorWrite1"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/distance"
@@ -55,7 +55,7 @@
                 android:layout_width="0dip"
                 android:gravity="center_horizontal"
                 android:background="@drawable/left_border_train_live_list"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorWrite1"
                 android:textSize="15sp"/>
         </TableRow>
     </TableLayout>

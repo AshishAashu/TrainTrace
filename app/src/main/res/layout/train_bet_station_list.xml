@@ -22,8 +22,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
+                android:textColor="@color/colorPrimary"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
                 android:textSize="15sp" />
         </TableRow>
 
@@ -42,7 +42,7 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
 
             <TextView
@@ -54,7 +54,7 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
         </TableRow>
 
@@ -73,7 +73,7 @@
                 android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="Time:"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
 
             <TextView
@@ -85,7 +85,7 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
 
             <TextView
@@ -97,7 +97,7 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
 
             <TextView
@@ -109,7 +109,7 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
         </TableRow>
 
@@ -128,7 +128,7 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
         </TableRow>
 
@@ -147,7 +147,7 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
         </TableRow>
     </TableLayout>

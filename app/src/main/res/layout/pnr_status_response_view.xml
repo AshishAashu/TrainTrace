@@ -17,16 +17,14 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="PNR Number"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/pnr"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -38,16 +36,14 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Date Of Journey"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/doj"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -59,16 +55,14 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Total Passengers"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/total_passengers"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -80,16 +74,14 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Reservation From"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/from_station"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -100,17 +92,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
-                android:text="Reservation to"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:text="Train upto"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/to_station"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -122,16 +112,14 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Boarding Point"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/boarding_point"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -143,16 +131,14 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Reservation Upto"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/reservation_upto"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -164,16 +150,14 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Train"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/train"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow
@@ -185,25 +169,22 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Journey Class"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/journey_class"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
         </TableRow>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="center"
             android:padding="10dp"
             android:text="Passenger List"
-            android:textColor="@color/colorWhite"
             android:textSize="18dp" />
     </TableLayout>
 

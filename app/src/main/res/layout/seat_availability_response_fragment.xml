@@ -14,17 +14,19 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
+                android:gravity="center"
                 android:text="Train"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/train"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:gravity="center"
+                android:textColor="@color/colorWrite1"
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow>
@@ -34,16 +36,18 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="From Station"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/from_station"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:gravity="center"
+                android:textColor="@color/colorWrite1"
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow>
@@ -53,16 +57,18 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="To Station"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/to_station"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:gravity="center"
+                android:textColor="@color/colorWrite1"
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow>
@@ -72,16 +78,18 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Journey Class"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/journey_class"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:gravity="center"
+                android:textColor="@color/colorWrite1"
+                android:textSize="12dp" />
         </TableRow>
 
         <TableRow>
@@ -91,16 +99,18 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="Quota"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/quota"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:gravity="center"
+                android:textColor="@color/colorWrite1"
+                android:textSize="12dp" />
         </TableRow>
     </TableLayout>
 
@@ -109,8 +119,11 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Availability"
-        android:textColor="@color/colorWhite"
-        android:textSize="18dp" />
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textSize="15dp" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -124,8 +137,9 @@
                 android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="Date"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textStyle="bold"
+                android:textColor="@color/colorWrite2"
+                android:textSize="12dp" />
 
             <TextView
                 android:layout_height="wrap_content"
@@ -133,8 +147,9 @@
                 android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="Status"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp" />
+                android:textStyle="bold"
+                android:textColor="@color/colorWrite2"
+                android:textSize="12dp" />
         </TableRow>
     </TableLayout>
 
@@ -142,6 +157,7 @@
         android:id="@+id/availabilitylist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical"></ashish.com.myapp1.NonScrollListView>
+        android:scrollbars="vertical"
+        android:divider="@color/colorPrimary"></ashish.com.myapp1.NonScrollListView>
 
 </LinearLayout>

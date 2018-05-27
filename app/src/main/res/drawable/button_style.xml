@@ -4,18 +4,17 @@
     <item android:state_pressed="true">
         <shape>
 
-            <solid android:color="@android:color/transparent" />
+            <solid android:color="@color/btn_success" />
             <stroke android:width="2dp" android:color="@color/colorWhite" />
             <corners android:radius="22dp" />
-
         </shape>
     </item>
     <!-- focused state -->
     <item android:state_enabled="true">
         <shape>
 
-            <solid android:color="@android:color/transparent" />
-            <stroke android:width="2dp" android:color="@color/colorPrimary" />
+            <solid android:color="@color/btn_success" />
+            <stroke android:width="2dp" android:color="@color/colorWhite" />
             <corners android:radius="22dp" />
 
         </shape>
@@ -23,8 +22,8 @@
     <!-- Disable state-->
     <item android:state_enabled="false">
         <shape>
-            <solid android:color="@android:color/transparent" />
-            <stroke android:width="2dp" android:color="@color/colorDarkGrey" />
+            <solid android:color="@color/btn_dis_success"/>
+            <stroke android:width="2dp" android:color="@color/colorWhite" />
             <corners android:radius="22dp" />
         </shape>
     </item>

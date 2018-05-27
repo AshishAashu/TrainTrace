@@ -22,42 +22,81 @@
             android:textColor="@color/colorWhite"
             android:textSize="18dp" />
 
-        <AutoCompleteTextView
-            android:id="@+id/sourcestn"
+        <LinearLayout
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:hint="Enter Source Station Code"
-            android:imeOptions="actionDone"
-            android:inputType="textCapWords"
-            android:padding="20sp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <AutoCompleteTextView
-            android:id="@+id/deststn"
-            android:layout_width="246dp"
+            <ImageView
+                android:id="@+id/trainsourceimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_train_source_station" />
+
+            <AutoCompleteTextView
+                android:id="@+id/sourcestn"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Enter Your Source"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:padding="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:enabled="false"
-            android:hint="Enter Dest Station Code"
-            android:imeOptions="actionDone"
-            android:inputType="textCapWords"
-            android:padding="20sp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/datetxt"
-            android:layout_width="246dp"
+            <ImageView
+                android:id="@+id/traindestimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_train_dest_station" />
+
+            <AutoCompleteTextView
+                android:id="@+id/deststn"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:enabled="false"
+                android:hint="Enter Your Destination"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:padding="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/date_view_style"
-            android:enabled="false"
-            android:imeOptions="actionDone"
-            android:padding="20sp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/calenderimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendar" />
+
+            <TextView
+                android:id="@+id/datetxt"
+                android:layout_width="226dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:enabled="false"
+                android:hint="Choose date"
+                android:imeOptions="actionDone"
+                android:padding="20sp" />
+
+
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/trainbwtsubmit"
