@@ -1,6 +1,7 @@
 package ashish.com.myapp1.Manager;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ public class TrainSuggestionList extends AsyncTask {
             data.put("trainkey",trainkey);
 //            String NEW_URL = "https://api.railwayapi.com/v2/suggest-train/train/" + trainkey + "/apikey/375u66amun/";
             String NEW_URL = UrlManager.makeUrl("trainsuggestion",data);
+//            String NEW_URL = "https://jsonplaceholder.typicode.com/posts/1";
             URL url = new URL(NEW_URL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

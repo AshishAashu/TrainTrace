@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import ashish.com.myapp1.Manager.ErrorManager;
 import ashish.com.myapp1.Manager.MyException;
 import ashish.com.myapp1.Manager.UrlManager;
 import ashish.com.myapp1.Responses.PnrStatusResponseFragment;
@@ -80,34 +81,37 @@ public class PnrFragment extends Fragment {
                     Map<String,String > data = mapData();
                     url = UrlManager.makeUrl("pnrstatus", (HashMap<String, String>) data);
                     JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,
-                            url, null,
-                            new Response.Listener<JSONObject>() {
+                        url, null,
+                        new Response.Listener<JSONObject>() {
 
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    try {
-                                        if(response.getInt("response_code")==200) {
-                                            String pnr = response.toString();
-//                                            Toast.makeText(getActivity(), pnr, Toast.LENGTH_SHORT).show();
-                                            Bundle b = new Bundle();
-                                            b.putString("data", pnr);
-                                            PnrStatusResponseFragment pnrStatusResponseFragment = new PnrStatusResponseFragment();
-                                            pnrStatusResponseFragment.setArguments(b);
-                                            loadFragment(pnrStatusResponseFragment);
-                                        }
-                                        else{
-                                            throw new MyException("Response Error.");
-                                        }
-                                    } catch (Exception e) {
-                                        progressDialog.dismiss();
-                                        Toast.makeText(getActivity(), "plz try after some time...", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
                             @Override
-                            public void onErrorResponse(VolleyError error) {
+                            public void onResponse(JSONObject response) {
+                            try {
+                                if(response.getInt("response_code")==200) {
+                                    String pnr = response.toString();
+//                                            Toast.makeText(getActivity(), pnr, Toast.LENGTH_SHORT).show();
+                                    Bundle b = new Bundle();
+                                    b.putString("data", pnr);
+                                    PnrStatusResponseFragment pnrStatusResponseFragment = new PnrStatusResponseFragment();
+                                    pnrStatusResponseFragment.setArguments(b);
+                                    loadFragment(pnrStatusResponseFragment);
+                                }
+                                else{
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getActivity(),
+                                    ErrorManager.getErrorMessage(response.getInt("response_code")),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
                                 progressDialog.dismiss();
                                 Toast.makeText(getActivity(), "plz try after some time...", Toast.LENGTH_SHORT).show();
+                            }
+                            }
+                        }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "plz try after some time...", Toast.LENGTH_SHORT).show();
                             }
                     });
                     VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);

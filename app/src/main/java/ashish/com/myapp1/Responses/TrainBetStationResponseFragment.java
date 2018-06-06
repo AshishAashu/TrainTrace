@@ -50,35 +50,33 @@ public class TrainBetStationResponseFragment extends Fragment {
 
     private void setFields() throws JSONException {
         trainlist = view.findViewById(R.id.trainlist);
-        Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
         JSONArray trains = jsobj.getJSONArray("trains");
-        Toast.makeText(getActivity(),trains.toString(),Toast.LENGTH_SHORT).show();
-//        for (int i = 0; i < trains.length(); i++) {
-//            JSONObject trainobj = trains.getJSONObject(i);
-//            JSONObject stn = trainobj.getJSONObject("from_station");
-//            String from = stn.getString("name") + " ( " + stn.getString("code") + " )";
-//            stn = trainobj.getJSONObject("to_station");
-//            String to = stn.getString("name") + " ( " + stn.getString("code") + " )";
-//            JSONArray classes = trainobj.getJSONArray("classes");
-//            ArrayList classarr = new ArrayList();
-//            for (int j = 0; j < classes.length(); j++) {
-//                JSONObject classobj = classes.getJSONObject(i);
-//                if (classobj.getString("available").equals("Y"))
-//                    classarr.add(classobj.getString("code"));
-//            }
-//            JSONArray days = trainobj.getJSONArray("days");
-//            ArrayList daysarr = new ArrayList();
-//            for(int j=0;j<days.length();j++){
-//                JSONObject dayobj = days.getJSONObject(i);
-//                if(dayobj.getString("runs").equals("Y")){
-//                    daysarr.add(dayobj.getString("code"));
-//                }
-//            }
-//            rtls.add(new ResponseTrainList(trainobj.getString("name"), trainobj.getString("number"), from,to,
-//                    trainobj.getString("src_departure_time"),trainobj.getString("dest_arrival_time"),
-//                    trainobj.getString("travel_time"),daysarr,classarr));
-//        }
-//        adap = new ResponseTrainListAdapter(getActivity().getApplicationContext(),rtls);
-//        trainlist.setAdapter(adap);
+        for (int i = 0; i < trains.length(); i++) {
+            JSONObject trainobj = trains.getJSONObject(i);
+            JSONObject stn = trainobj.getJSONObject("from_station");
+            String from = stn.getString("name") + " ( " + stn.getString("code") + " )";
+            stn = trainobj.getJSONObject("to_station");
+            String to = stn.getString("name") + " ( " + stn.getString("code") + " )";
+            JSONArray classes = trainobj.getJSONArray("classes");
+            ArrayList classarr = new ArrayList();
+            for (int j = 0; j < classes.length(); j++) {
+                JSONObject classobj = classes.getJSONObject(i);
+                if (classobj.getString("available").equals("Y"))
+                    classarr.add(classobj.getString("code"));
+            }
+            JSONArray days = trainobj.getJSONArray("days");
+            ArrayList daysarr = new ArrayList();
+            for(int j=0;j<days.length();j++){
+                JSONObject dayobj = days.getJSONObject(i);
+                if(dayobj.getString("runs").equals("Y")){
+                    daysarr.add(dayobj.getString("code"));
+                }
+            }
+            rtls.add(new ResponseTrainList(trainobj.getString("name"), trainobj.getString("number"), from,to,
+                    trainobj.getString("src_departure_time"),trainobj.getString("dest_arrival_time"),
+                    trainobj.getString("travel_time"),daysarr,classarr));
+        }
+        adap = new ResponseTrainListAdapter(getActivity().getApplicationContext(),rtls);
+        trainlist.setAdapter(adap);
     }
 }

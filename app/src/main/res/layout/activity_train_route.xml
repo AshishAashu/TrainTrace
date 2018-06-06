@@ -66,6 +66,7 @@
             android:background="@drawable/button_style"
             android:padding="10dp"
             android:text="Get Train Route"
+            android:enabled="false"
             android:textColor="@color/colorWhite" />
 
         <FrameLayout

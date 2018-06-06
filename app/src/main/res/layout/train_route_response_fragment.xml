@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TableLayout
@@ -16,108 +16,47 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:id="@+id/train_detail"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:textColor="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:padding="10dp"
-                android:textSize="15sp" />
+                android:text="Train name"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/train_name"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/colorWrite1"
+                android:textSize="15dp" />
         </TableRow>
 
         <TableRow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginBottom="10dp">
 
             <TextView
-                android:id="@+id/from_stn"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:background="@drawable/left_border_train_live_list"
-                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:padding="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:text="Train no."
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/to_stn"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:background="@drawable/left_border_train_live_list"
-                android:gravity="center_horizontal"
+                android:id="@+id/train_no"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:padding="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
+                android:textColor="@color/colorWrite1"
+                android:textSize="15dp" />
         </TableRow>
-
         <TableRow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:background="@drawable/left_border_train_live_list"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:text="Time:"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/dep"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:background="@drawable/left_border_train_live_list"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/arrival"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:background="@drawable/left_border_train_live_list"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/total"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:background="@drawable/left_border_train_live_list"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/days"
@@ -128,15 +67,14 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/classes"
@@ -147,8 +85,67 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="Station"
+                android:padding="10dp"
+                android:textColor="@color/colorWrite2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:text="Sch.Arr."
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/left_border_train_live_list"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:textColor="@color/colorWrite2"
+                android:textSize="15sp" />
+            <TextView
+                android:text="Sch.Dep."
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/left_border_train_live_list"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:textColor="@color/colorWrite2"
+                android:textSize="15sp" />
+            <TextView
+                android:text="Day"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/left_border_train_live_list"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:textColor="@color/colorWrite2"
                 android:textSize="15sp" />
         </TableRow>
     </TableLayout>
+
+    <ashish.com.myapp1.NonScrollListView
+        android:id="@+id/routelist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#683f9f"
+        android:dividerHeight="2dp" />
 </LinearLayout>

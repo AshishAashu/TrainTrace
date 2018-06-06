@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
@@ -48,9 +49,8 @@ public class FairEnquiryFragment extends Fragment {
     EditText age;
     TextView datetxt;
     Spinner sourcestn, destinationstn, classcode, quota;
-    SuggestionList selected_train;
-    SuggestionListAdapter adapter;
-    String url;
+    SourceDestinationAdapter adapter;
+    String url,selected_class,selected_quota;
     int changeText = 0;
     ArrayList<SourceDestinationList> trainroutelist;
     List<TrainList> trainLists = new ArrayList<>();
@@ -81,16 +81,15 @@ public class FairEnquiryFragment extends Fragment {
         taca.setV(view);
         traintxt_tv.setAdapter(taca);
         setOnTrainAutoCompleteListener();
+        setClassQuota();
     }
 
     private void setOnTrainAutoCompleteListener(){
         traintxt_tv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(sourcestn.getVisibility() == View.GONE){
-                    sourcestn.setVisibility(View.VISIBLE);
-                }
-                getTrainRouteArrayList();
+                TrainList train = (TrainList) parent.getSelectedItem();
+                Toast.makeText(getActivity(),train.getTrainname(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -189,5 +188,35 @@ public class FairEnquiryFragment extends Fragment {
         });
     }
 
+    private void setClassQuota(){
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.classcode, R.layout.activity_textview);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        classcode.setAdapter(adapter);
+        classcode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String s = (String) parent.getSelectedItem();
+                selected_class = s;
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.quota, R.layout.activity_textview);
+        quota.setAdapter(adapter);
+        quota.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String s = (String) parent.getSelectedItem();
+                selected_quota = s;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
 }
