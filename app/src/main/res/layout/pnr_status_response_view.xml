@@ -118,6 +118,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="10dp"
+                android:textColor="@color/colorWrite2"
+                android:gravity="center"
                 android:textSize="12dp" />
         </TableRow>
 

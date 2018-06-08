@@ -133,7 +133,7 @@ public class LiveTrainStatusResponseFragment extends Fragment {
     private String getSendableMessage() throws Exception{
         String message = "Live Train Status:";
         message +="\nTrain: "+jsobj.getJSONObject("train").getString("name")+"["+
-                jsobj.getJSONObject("train").getString("code")+"]";
+                jsobj.getJSONObject("train").getString("number")+"]";
         message += "\nCurrent Position: "+jsobj.getString("position");
         return message;
     }
