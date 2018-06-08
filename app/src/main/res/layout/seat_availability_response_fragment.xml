@@ -13,8 +13,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="10dp"
                 android:gravity="center"
+                android:padding="10dp"
                 android:text="Train"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12dp" />
@@ -23,8 +23,8 @@
                 android:id="@+id/train"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:padding="10dp"
                 android:gravity="center"
+                android:padding="10dp"
                 android:textColor="@color/colorWrite1"
                 android:textSize="12dp" />
         </TableRow>
@@ -34,9 +34,9 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="From Station"
-                android:gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12dp" />
 
@@ -44,8 +44,8 @@
                 android:id="@+id/from_station"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:padding="10dp"
                 android:gravity="center"
+                android:padding="10dp"
                 android:textColor="@color/colorWrite1"
                 android:textSize="12dp" />
         </TableRow>
@@ -55,9 +55,9 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="To Station"
-                android:gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12dp" />
 
@@ -65,8 +65,8 @@
                 android:id="@+id/to_station"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:padding="10dp"
                 android:gravity="center"
+                android:padding="10dp"
                 android:textColor="@color/colorWrite1"
                 android:textSize="12dp" />
         </TableRow>
@@ -76,9 +76,9 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Journey Class"
-                android:gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12dp" />
 
@@ -86,8 +86,8 @@
                 android:id="@+id/journey_class"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:padding="10dp"
                 android:gravity="center"
+                android:padding="10dp"
                 android:textColor="@color/colorWrite1"
                 android:textSize="12dp" />
         </TableRow>
@@ -97,9 +97,9 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Quota"
-                android:gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12dp" />
 
@@ -107,8 +107,8 @@
                 android:id="@+id/quota"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:padding="10dp"
                 android:gravity="center"
+                android:padding="10dp"
                 android:textColor="@color/colorWrite1"
                 android:textSize="12dp" />
         </TableRow>
@@ -117,13 +117,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
         android:padding="10dp"
         android:text="Availability"
-        android:gravity="center"
         android:textColor="@color/colorPrimary"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -137,9 +137,9 @@
                 android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="Date"
-                android:textStyle="bold"
                 android:textColor="@color/colorWrite2"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_height="wrap_content"
@@ -147,9 +147,9 @@
                 android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="Status"
-                android:textStyle="bold"
                 android:textColor="@color/colorWrite2"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                android:textStyle="bold" />
         </TableRow>
     </TableLayout>
 
@@ -157,7 +157,26 @@
         android:id="@+id/availabilitylist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:divider="@color/colorPrimary"></ashish.com.myapp1.NonScrollListView>
+        android:divider="@color/colorPrimary"
+        android:scrollbars="vertical">
+
+    </ashish.com.myapp1.NonScrollListView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/share_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/whatsapp" />
+
+    </LinearLayout>
 
 </LinearLayout>

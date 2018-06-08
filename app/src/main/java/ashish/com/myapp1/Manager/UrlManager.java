@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class UrlManager {
 
-    static String apikey="de66zi7m6s";
+    static String apikey="lo2d9e2mjm";
     public static String makeUrl(String reqfor,HashMap<String,String> data){
         String url = null;
         switch(reqfor){

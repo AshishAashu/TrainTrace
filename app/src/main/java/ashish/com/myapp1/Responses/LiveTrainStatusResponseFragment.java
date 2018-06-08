@@ -1,11 +1,13 @@
 package ashish.com.myapp1.Responses;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ public class LiveTrainStatusResponseFragment extends Fragment {
     LiveTrainStatusList ltsl;
     NonScrollListView availabilitylist;
     LiveTrainStatusListAdapter adapter;
+    ImageView share_img;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class LiveTrainStatusResponseFragment extends Fragment {
         traindetail = (TextView)view.findViewById(R.id.traindetail);
         trainposition = (TextView)view.findViewById(R.id.trainposition);
         availabilitylist = (NonScrollListView) view.findViewById(R.id.livetrainstatuslist);
+        share_img = (ImageView) view.findViewById(R.id.share_img);
+        setShareImageClickListener();
         JSONObject temp =new JSONObject();
         //Train Object
         temp = (JSONObject) jsobj.get("train");
@@ -102,5 +107,34 @@ public class LiveTrainStatusResponseFragment extends Fragment {
         }
         adapter = new LiveTrainStatusListAdapter(getActivity().getApplicationContext(),ltsls);
         availabilitylist.setAdapter(adapter);
+    }
+
+    private void setShareImageClickListener()  {
+        share_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                whatsappIntent.setType("text/plain");
+                whatsappIntent.setPackage("com.whatsapp");
+                try {
+                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, getSendableMessage());
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_SHORT).show();
+                }
+                try {
+                    getActivity().startActivity(whatsappIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getActivity(),"Whatsapp have not been installed.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private String getSendableMessage() throws Exception{
+        String message = "Live Train Status:";
+        message +="\nTrain: "+jsobj.getJSONObject("train").getString("name")+"["+
+                jsobj.getJSONObject("train").getString("code")+"]";
+        message += "\nCurrent Position: "+jsobj.getString("position");
+        return message;
     }
 }

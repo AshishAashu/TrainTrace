@@ -1,11 +1,14 @@
 package ashish.com.myapp1.Responses;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +32,7 @@ public class PnrStatusResponseFragment extends Fragment {
     JSONObject jsobj;
     TextView pnr,doj,total_passengers,from_station,to_station,boarding_point,train,journey_class,reservation_upto;
     ListView passengerlist;
+    ImageView share_img;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (getArguments() != null) {
             data = getArguments().getString("data");
@@ -55,32 +59,33 @@ public class PnrStatusResponseFragment extends Fragment {
         train = (TextView) view.findViewById(R.id.train);
         journey_class = (TextView) view.findViewById(R.id.journey_class);
         passengerlist = (ListView) view.findViewById(R.id.passengerlist);
-
+        share_img = (ImageView)view.findViewById(R.id.share_img);
+        setShareImageClickListener();
         pnr.setText(jsobj.get("pnr").toString());
         doj.setText(jsobj.get("doj").toString());
         total_passengers.setText(jsobj.getString("total_passengers"));
         //From Station
-        JSONObject temp= (JSONObject) jsobj.get("from_station");
+        JSONObject temp=  jsobj.getJSONObject("from_station");
         from_station.setText(temp.get("name").toString()+" ( "+temp.get("code").toString()+" )");
 
         //TO Station
-        temp= (JSONObject) jsobj.get("to_station");
+        temp=  jsobj.getJSONObject("to_station");
         to_station.setText(temp.get("name").toString()+" ( "+temp.get("code").toString()+" )");
 
         //Boarding Point
-        temp= (JSONObject) jsobj.get("boarding_point");
+        temp=  jsobj.getJSONObject("boarding_point");
         boarding_point.setText(temp.get("name").toString()+" ( "+temp.get("code").toString()+" )");
 
         //ReservationUpto
-        temp= (JSONObject) jsobj.get("reservation_upto");
+        temp=  jsobj.getJSONObject("reservation_upto");
         reservation_upto.setText(temp.get("name").toString()+" ( "+temp.get("code").toString()+" )");
 
         //Train
-        temp= (JSONObject) jsobj.get("train");
+        temp=  jsobj.getJSONObject("train");
         train.setText(temp.get("name").toString()+" [ "+temp.get("number").toString()+" ]");
 
         //Journey Class
-        temp=(JSONObject) jsobj.get("journey_class");
+        temp= jsobj.getJSONObject("journey_class");
         journey_class.setText(temp.get("code").toString());
 
         passengerLists = new ArrayList<PassengerList>();
@@ -88,10 +93,56 @@ public class PnrStatusResponseFragment extends Fragment {
         JSONArray passengerArray = jsobj.getJSONArray("passengers");
         for(int i=0;i<passengerArray.length();i++){
             temp = (JSONObject) passengerArray.get(i);
-            passengerLists.add(new PassengerList(temp.get("no").toString(),temp.getString("booking_status"),
-                    temp.getString("current_status")));
+            if((temp.getString("booking_status").split("/")[0]).equals("CNF")){
+                passengerLists.add(new PassengerList(temp.get("no").toString(),
+                        temp.getString("booking_status"),"CNF"));
+            }else {
+                passengerLists.add(new PassengerList(temp.get("no").toString(),
+                        temp.getString("booking_status"),
+                        temp.getString("current_status")));
+            }
         }
         adapter = new PassengerListAdapter(getActivity().getApplicationContext(),passengerLists);
         passengerlist.setAdapter(adapter);
+    }
+
+    private void setShareImageClickListener()  {
+        share_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                whatsappIntent.setType("text/plain");
+                whatsappIntent.setPackage("com.whatsapp");
+                try {
+                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, getSendableMessage());
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_SHORT).show();
+                }
+                try {
+                    getActivity().startActivity(whatsappIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getActivity(),"Whatsapp have not been installed.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private String getSendableMessage() throws Exception{
+        String message = "PNR Status:";
+        message += "\nPNR No: "+jsobj.get("pnr").toString();
+        message += "\nDate Of Journey: "+jsobj.get("doj").toString();
+        message += "\nTrain:"+jsobj.getJSONObject("train").getString("name")+
+                " [ "+jsobj.getJSONObject("train").getString("number")+" ]";
+        message += "\nFrom: "+jsobj.getJSONObject("from_station").getString("name");
+        message += "\nTo: "+jsobj.getJSONObject("to_station").getString("name");
+        message += "\nBoarding Point: "+jsobj.getJSONObject("boarding_point").getString("name");
+        message += "\nReservation Upto: "+jsobj.getJSONObject("reservation_upto").getString("name");
+        message += "\nJourney Class: "+jsobj.getJSONObject("journey_class").getString("code");
+        for(int i= 0;i<passengerLists.size();i++){
+            PassengerList pl = passengerLists.get(i);
+            message += "\nPassenger No.("+(i+1)+")\nBooking Status:"+pl.getBooking_status()+
+                    "\nCurrent Status:"+pl.getCurrent_status();
+        }
+        return message;
     }
 }

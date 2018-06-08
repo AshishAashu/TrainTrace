@@ -15,15 +15,19 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="PNR Number"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/pnr"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:padding="10dp"
+                android:textColor="@color/colorWrite2"
                 android:textSize="12dp" />
         </TableRow>
 
@@ -34,15 +38,19 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Date Of Journey"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/doj"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:padding="10dp"
+                android:textColor="@color/colorWrite2"
                 android:textSize="12dp" />
         </TableRow>
 
@@ -53,15 +61,19 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Total Passengers"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/total_passengers"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:padding="10dp"
+                android:textColor="@color/colorWrite2"
                 android:textSize="12dp" />
         </TableRow>
 
@@ -72,15 +84,19 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Reservation From"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/from_station"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:padding="10dp"
+                android:textColor="@color/colorWrite2"
                 android:textSize="12dp" />
         </TableRow>
 
@@ -91,8 +107,10 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Train upto"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp" />
 
             <TextView
@@ -110,15 +128,19 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Boarding Point"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/boarding_point"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:padding="10dp"
+                android:textColor="@color/colorWrite2"
                 android:textSize="12dp" />
         </TableRow>
 
@@ -129,15 +151,19 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Reservation Upto"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/reservation_upto"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:padding="10dp"
+                android:textColor="@color/colorWrite2"
                 android:textSize="12dp" />
         </TableRow>
 
@@ -148,15 +174,19 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Train"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/train"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:padding="10dp"
+                android:textColor="@color/colorWrite2"
                 android:textSize="12dp" />
         </TableRow>
 
@@ -167,15 +197,19 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Journey Class"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/journey_class"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:padding="10dp"
+                android:textColor="@color/colorWrite2"
                 android:textSize="12dp" />
         </TableRow>
 
@@ -185,6 +219,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Passenger List"
+            android:textColor="@color/colorWrite1"
             android:textSize="18dp" />
     </TableLayout>
 
@@ -199,5 +234,22 @@
             android:layout_height="wrap_content"
             android:divider="#c2a0ef"
             android:dividerHeight="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/share_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/whatsapp" />
+
     </LinearLayout>
 </LinearLayout>
