@@ -46,6 +46,7 @@ import ashish.com.myapp1.Adapter.SourceDestinationAdapter;
 import ashish.com.myapp1.List.SourceDestinationList;
 import ashish.com.myapp1.Manager.MyException;
 import ashish.com.myapp1.Manager.ResponseCodeManager;
+import ashish.com.myapp1.Manager.SoftKeyBoardOperation;
 import ashish.com.myapp1.Manager.UrlManager;
 import ashish.com.myapp1.Responses.SeatAvailabilityResponseFragment;
 
@@ -104,7 +105,6 @@ public class SeatAvailabilityFragment extends Fragment {
                                     setTrainSourceArrayList(jsonsource);
                                     source.setVisibility(View.VISIBLE);
                                     destination.setVisibility(View.VISIBLE);
-                                    progressDialog.dismiss();
                                     showTrainSource();
                                     setSourceSelectListener();
                                 } else {
@@ -151,12 +151,13 @@ public class SeatAvailabilityFragment extends Fragment {
     }
 
     private void showTrainSource() {
-        ArrayList<SourceDestinationList> showsourcelist = new ArrayList<SourceDestinationList>();
-        for (int i = 0; i < sourcelist.size() - 1; i++) {
-            showsourcelist.add(sourcelist.get(i));
-        }
-        adapter = new SourceDestinationAdapter(getActivity().getApplicationContext(), showsourcelist);
+//        ArrayList<SourceDestinationList> showsourcelist = new ArrayList<SourceDestinationList>();
+//        for (int i = 0; i < sourcelist.size() - 1; i++) {
+//            showsourcelist.add(sourcelist.get(i));
+//        }
+        adapter = new SourceDestinationAdapter(getActivity().getApplicationContext(), sourcelist);
         source.setAdapter(adapter);
+        progressDialog.dismiss();
     }
 
     private void showTrainDestination() {
@@ -294,6 +295,7 @@ public class SeatAvailabilityFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.seatavailabilityresponse, fragment);
         fragmentTransaction.commit();
+        SoftKeyBoardOperation.hideSoftKeyboard(view, getActivity());
         progressDialog.dismiss();
     }
 

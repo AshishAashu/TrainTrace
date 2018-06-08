@@ -1,62 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <TableLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*">
+        android:layout_height="wrap_content">
+
         <TableRow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            >
+            android:layout_marginTop="10dp">
+
             <TextView
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:layout_width="0dip"
-                android:padding="10dp"
                 android:id="@+id/stn_name"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:textColor="@color/colorWrite1"
-                android:textSize="15sp" />
-            <TextView
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
                 android:layout_width="0dip"
-                android:padding="10dp"
-                android:id="@+id/actuatarrival"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:background="@drawable/left_border_train_live_list"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:padding="10dp"
                 android:textColor="@color/colorWrite1"
                 android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/actuatarrival"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/left_border_train_live_list"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/colorWrite1"
+                android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/actualdeparture"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
                 android:layout_width="0dip"
-                android:padding="10dp"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
+                android:layout_weight="1"
                 android:background="@drawable/left_border_train_live_list"
+                android:gravity="center"
+                android:padding="10dp"
                 android:textColor="@color/colorWrite1"
                 android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/distance"
+                android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_width="0dip"
-                android:gravity="center_horizontal"
                 android:background="@drawable/left_border_train_live_list"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:textColor="@color/colorWrite1"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

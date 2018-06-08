@@ -58,8 +58,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*">
+        android:layout_height="wrap_content">
 
         <TableRow android:layout_width="0dp">
 
@@ -67,12 +66,12 @@
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
+                android:layout_weight="2"
+                android:gravity="center"
                 android:padding="10dp"
-                android:text="Station Name"
+                android:text="Station\nName"
                 android:textColor="@color/colorPrimary"
-                android:textSize="15dp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="0dip"
@@ -82,9 +81,9 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:text="Actual Arrival(Delay)"
+                android:text="Actual Arrival\n(Delay)"
                 android:textColor="@color/colorPrimary"
-                android:textSize="15dp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="0dip"
@@ -94,9 +93,9 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:text="Actual Departure(Delay)"
+                android:text="Actual Dep.\n(Delay)"
                 android:textColor="@color/colorPrimary"
-                android:textSize="15dp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="0dip"
@@ -104,11 +103,11 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:background="@drawable/left_border_train_live_list"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Distance"
                 android:textColor="@color/colorPrimary"
-                android:textSize="15dp" />
+                android:textSize="14dp" />
         </TableRow>
     </TableLayout>
 

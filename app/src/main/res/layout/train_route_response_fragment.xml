@@ -53,6 +53,7 @@
                 android:textColor="@color/colorWrite1"
                 android:textSize="15dp" />
         </TableRow>
+
         <TableRow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -95,19 +96,19 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp">
 
+
             <TextView
                 android:layout_width="0dip"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:gravity="center_horizontal"
-                android:text="Station"
                 android:padding="10dp"
+                android:text="Station"
                 android:textColor="@color/colorWrite2"
                 android:textSize="15sp" />
 
             <TextView
-                android:text="Sch.Arr."
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal"
@@ -115,10 +116,11 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
+                android:text="Arr."
                 android:textColor="@color/colorWrite2"
                 android:textSize="15sp" />
+
             <TextView
-                android:text="Sch.Dep."
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal"
@@ -126,17 +128,19 @@
                 android:background="@drawable/left_border_train_live_list"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
+                android:text="Dep."
                 android:textColor="@color/colorWrite2"
                 android:textSize="15sp" />
+
             <TextView
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/left_border_train_live_list"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
                 android:text="Day"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:background="@drawable/left_border_train_live_list"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
                 android:textColor="@color/colorWrite2"
                 android:textSize="15sp" />
         </TableRow>

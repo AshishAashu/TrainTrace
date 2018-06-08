@@ -1,5 +1,6 @@
 package ashish.com.myapp1;
 
+import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -29,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +44,7 @@ import ashish.com.myapp1.Adapter.TrainAutoCompleteAdapter;
 import ashish.com.myapp1.List.SourceDestinationList;
 import ashish.com.myapp1.List.SuggestionList;
 import ashish.com.myapp1.List.TrainList;
+import ashish.com.myapp1.Manager.ErrorManager;
 import ashish.com.myapp1.Manager.MyException;
 import ashish.com.myapp1.Manager.ResponseCodeManager;
 import ashish.com.myapp1.Manager.UrlManager;
@@ -49,9 +55,9 @@ public class FairEnquiryFragment extends Fragment {
     EditText age;
     TextView datetxt;
     Spinner sourcestn, destinationstn, classcode, quota;
-    SourceDestinationAdapter adapter;
-    String url,selected_class,selected_quota;
-    int changeText = 0;
+    ImageView calenderimg;
+    Button fairenquirysubmit;
+    String url,selected_class,selected_quota,selected_date,age_str,selected_train_no;
     ArrayList<SourceDestinationList> trainroutelist;
     List<TrainList> trainLists = new ArrayList<>();
     TrainAutoCompleteAdapter taca;
@@ -74,6 +80,8 @@ public class FairEnquiryFragment extends Fragment {
         quota = (Spinner) view.findViewById(R.id.quota);
         age = (EditText) view.findViewById(R.id.agetxt);
         datetxt = (TextView) view.findViewById(R.id.datetxt);
+        calenderimg = (ImageView) view.findViewById(R.id.calenderimg);
+        fairenquirysubmit = (Button) view.findViewById(R.id.fairenquirysubmit);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Please  wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -88,8 +96,9 @@ public class FairEnquiryFragment extends Fragment {
         traintxt_tv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TrainList train = (TrainList) parent.getSelectedItem();
-                Toast.makeText(getActivity(),train.getTrainname(),Toast.LENGTH_SHORT).show();
+                TrainList train = (TrainList) parent.getItemAtPosition(position);
+                selected_train_no = train.getTraincode();
+                getTrainRouteArrayList();
             }
         });
     }
@@ -97,14 +106,13 @@ public class FairEnquiryFragment extends Fragment {
     private void getTrainRouteArrayList(){
         progressDialog.show();
         HashMap<String, String> hm = new HashMap<String, String>();
-        hm.put("trainno", traintxt_tv.getText().toString().split("-")[1]);
+        hm.put("trainno", selected_train_no);
         url = UrlManager.makeUrl("trainroute", hm);
         Toast.makeText(getActivity(),url, Toast.LENGTH_SHORT).show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 String jsonsource = response.toString();
-                Toast.makeText(getActivity(),jsonsource, Toast.LENGTH_SHORT).show();
                 try {
                     int res_code = (new JSONObject(jsonsource).getInt("response_code"));
                     if (res_code == 200) {
@@ -119,8 +127,9 @@ public class FairEnquiryFragment extends Fragment {
                         }
                         showTrainSource();
                     } else {
-
-                        throw new MyException("Error");
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), ErrorManager.getErrorMessage(res_code),
+                                Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     progressDialog.dismiss();
@@ -138,8 +147,10 @@ public class FairEnquiryFragment extends Fragment {
     }
 
     private void showTrainSource(){
+        Toast.makeText(getActivity(),trainroutelist.toString(), Toast.LENGTH_SHORT).show();
+        sourcestn.setVisibility(View.VISIBLE);
         sda = new SourceDestinationAdapter(getActivity().getApplicationContext(), trainroutelist);
-        sourcestn.setAdapter(adapter);
+        sourcestn.setAdapter(sda);
         setSourceSelectListener();
         progressDialog.dismiss();
     }
@@ -148,7 +159,7 @@ public class FairEnquiryFragment extends Fragment {
         sourcestn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selected_source = (SourceDestinationList)parent.getSelectedItem();
+                selected_source= (SourceDestinationList)parent.getItemAtPosition(position);
                 if(destinationstn.getVisibility() == View.GONE)
                     destinationstn.setVisibility(View.VISIBLE);
                 ArrayList<SourceDestinationList> showdestinationlist = new ArrayList<SourceDestinationList>();
@@ -163,7 +174,7 @@ public class FairEnquiryFragment extends Fragment {
                     }
                 }
                 sda = new SourceDestinationAdapter(getActivity().getApplicationContext(), showdestinationlist);
-                destinationstn.setAdapter(adapter);
+                destinationstn.setAdapter(sda);
                 setDestinationListener();
             }
 
@@ -178,7 +189,7 @@ public class FairEnquiryFragment extends Fragment {
         destinationstn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selected_destination = (SourceDestinationList) parent.getItemAtPosition(position);
+                selected_destination = (SourceDestinationList)parent.getItemAtPosition(position);
             }
 
             @Override
@@ -190,13 +201,11 @@ public class FairEnquiryFragment extends Fragment {
 
     private void setClassQuota(){
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.classcode, R.layout.activity_textview);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         classcode.setAdapter(adapter);
         classcode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String s = (String) parent.getSelectedItem();
-                selected_class = s;
+                selected_class = (String) parent.getItemAtPosition(position);
             }
 
             @Override
@@ -209,8 +218,9 @@ public class FairEnquiryFragment extends Fragment {
         quota.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String s = (String) parent.getSelectedItem();
+                String s = (String) parent.getItemAtPosition(position);
                 selected_quota = s;
+                setCalenderImageOnClickListener();
             }
 
             @Override
@@ -218,5 +228,65 @@ public class FairEnquiryFragment extends Fragment {
 
             }
         });
+    }
+
+    private void setCalenderImageOnClickListener() {
+        calenderimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                month = month + 1;
+
+                DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        datetxt.setText(makeDate(dayOfMonth, (month + 1), year));
+                        selected_date = datetxt.getText().toString();
+                        fairenquirysubmit.setEnabled(true);
+                        fairEnquirySubmitOnClickListener();
+                    }
+                }, year, month, day);
+                dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+                cal.add(Calendar.DATE, 90);
+                //dialog.getDatePicker().setMaxDate(new Date().getTime()+1000*60*60*24*30);
+                dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+                dialog.show();
+            }
+        });
+    }
+
+    private String makeDate(int d, int m, int y) {
+        String date = d + "-";
+        if(d<10)
+            date = "0"+d+"-";
+        if (m < 10)
+            date += "0";
+        date += m + "-";
+        date += y;
+        return date;
+    }
+
+    private void fairEnquirySubmitOnClickListener(){
+        fairenquirysubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), mapData().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private HashMap<String,String> mapData(){
+        HashMap<String,String> hm = new HashMap<String, String>();
+        hm.put("trainno",selected_train_no);
+        hm.put("source", selected_source.getCode());
+        hm.put("destination", selected_destination.getCode());
+        hm.put("age", age.getText().toString());
+        hm.put("class", selected_class);
+        hm.put("quota", selected_quota);
+        hm.put("date", selected_date);
+        return hm;
     }
 }

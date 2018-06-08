@@ -36,6 +36,7 @@ import java.util.Map;
 import ashish.com.myapp1.Adapter.StationAutoCompleteAdapter;
 import ashish.com.myapp1.List.StationList;
 import ashish.com.myapp1.Manager.MyException;
+import ashish.com.myapp1.Manager.SoftKeyBoardOperation;
 import ashish.com.myapp1.Manager.UrlManager;
 import ashish.com.myapp1.Responses.PnrStatusResponseFragment;
 import ashish.com.myapp1.Responses.TrainBetStationResponseFragment;
@@ -191,6 +192,7 @@ public class TrainBwtStationFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.pnrstatus, fragment);
         fragmentTransaction.commit();
+        SoftKeyBoardOperation.hideSoftKeyboard(view, getActivity());
         progressDialog.dismiss();
     }
 

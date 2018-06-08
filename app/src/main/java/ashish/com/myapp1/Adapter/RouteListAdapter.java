@@ -41,7 +41,6 @@ public class RouteListAdapter extends BaseAdapter {
 
     private class MyViewHolder{
         TextView station_name;
-        TextView station_code;
         TextView sch_arr;
         TextView sch_dep;
         TextView day;
@@ -54,13 +53,15 @@ public class RouteListAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.train_route_list, null);
             myViewHolder = new MyViewHolder();
             myViewHolder.station_name = (TextView) convertView.findViewById(R.id.station_name);
-            myViewHolder.station_code = (TextView) convertView.findViewById(R.id.station_code);
             myViewHolder.sch_arr = (TextView) convertView.findViewById(R.id.sch_arr);
             myViewHolder.sch_dep = (TextView) convertView.findViewById(R.id.sch_dep);
             myViewHolder.day = (TextView) convertView.findViewById(R.id.day);
             RouteList rl = rls.get(position);
-            myViewHolder.station_name.setText(rl.getNo()+":"+rl.getStation_name());
-            myViewHolder.station_code.setText("("+rl.getStation_code()+")");
+            myViewHolder.station_name.setText(rl.getNo()+":"+rl.getStation_name()+
+                    "\n("+rl.getStation_code()+")");
+            if(rl.getSch_arr().equals("SOURCE")) {
+               myViewHolder.sch_arr.setTextSize(14);
+            }
             myViewHolder.sch_arr.setText(rl.getSch_arr());
             myViewHolder.sch_dep.setText(rl.getSch_dep());
             myViewHolder.day.setText(rl.getDay()+"");

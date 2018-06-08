@@ -36,11 +36,9 @@ public class LiveTrainStatusResponseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if(getArguments()!=null){
             data = getArguments().getString("data");
-//            Toast.makeText(getActivity(),data,Toast.LENGTH_LONG).show();
             try {
                 jsobj= new JSONObject(data);
                 if(Integer.parseInt(jsobj.get("response_code").toString())==200){
-                    Toast.makeText(getActivity(),"Coming",Toast.LENGTH_LONG).show();
                     view = inflater.inflate(R.layout.live_train_response_fragment, container, false);
                     setFields();
                 }
@@ -70,32 +68,38 @@ public class LiveTrainStatusResponseFragment extends Fragment {
         for(int i=0;i<jsonArray.length();i++){
             temp = (JSONObject) jsonArray.get(i);
             JSONObject stationjsonobj=(JSONObject)temp.get("station");
-            String trainstr = stationjsonobj.getString("name")+" ["+stationjsonobj.getString("code")+"]";
+            String trainstr = stationjsonobj.getString("name")+"\n["+stationjsonobj.getString("code")+"]";
             String act_arr=null;
             String act_dep=null;
-            if(temp.getBoolean("has_arrived")){
-                act_arr = temp.getString("actarr")+","+temp.getString("actarr_date")+"("+
-                        temp.getString("latemin")+")";
+            int late_mins = Integer.valueOf(temp.getString("latemin"));
+            String late_hours = (late_mins/60 < 10)? "0"+(late_mins/60) : late_mins/60+"";
+            String late_seconds = (late_mins%60 < 10)? "0"+(late_mins%60) : late_mins%60+"";
+            String late_min_str = late_hours+":"+late_seconds;
+            if(temp.getBoolean("has_arrived") && i!=0){
+                act_arr = temp.getString("actarr")+"\n"+temp.getString("actarr_date")+",\n"+
+                        late_min_str;
             }else{
                 if(i==0)
                     act_arr = "Source";
                 else
-                    act_arr = temp.getString("scharr")+","+temp.getString("scharr_date")+"(ETA)";
+                    act_arr = temp.getString("scharr")+"\n"+temp.getString("scharr_date")+"\n(ETA)";
             }
+
+
             if(temp.getBoolean("has_departed")){
-                act_dep = temp.getString("actdep")+","+temp.getString("actarr_date")+"("+
-                        temp.getString("latemin")+")";
+                act_dep = temp.getString("actdep")+"\n"+temp.getString("actarr_date")+",\n"+
+                        late_min_str;
             }else{
-                if(i==debit-1)
+                if(i==jsonArray.length()-1)
                     act_dep = "--------";
-                else
-                    act_dep = temp.getString("scharr")+","+temp.getString("scharr_date")+"(ETD)";
+                else {
+                    act_dep = temp.getString("scharr") + "\n" +
+                            temp.getString("scharr_date") + "\n(ETD)";
+                }
             }
-//            Toast.makeText(getActivity(),trainstr+act_arr+act_dep+temp.getInt("distance"),Toast.LENGTH_SHORT).show();
             ltsl = new LiveTrainStatusList((i + 1), trainstr,act_arr,act_dep,temp.getInt("distance")+"");
             ltsls.add(ltsl);
         }
-//        Toast.makeText(getActivity(), ltsls.size()+"", Toast.LENGTH_SHORT).show();
         adapter = new LiveTrainStatusListAdapter(getActivity().getApplicationContext(),ltsls);
         availabilitylist.setAdapter(adapter);
     }

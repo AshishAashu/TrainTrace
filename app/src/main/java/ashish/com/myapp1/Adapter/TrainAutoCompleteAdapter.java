@@ -23,16 +23,10 @@ public class TrainAutoCompleteAdapter extends ArrayAdapter<TrainList> {
     List<TrainList> trainLists;
     View v;
     Context context;
-    ProgressDialog progressDialog;
 
     public TrainAutoCompleteAdapter(@NonNull Context context, int resource) {
         super(context, resource);
         this.trainLists = new ArrayList<TrainList>();
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("Please  wait...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(false);
-//        progressDialog.show();
     }
 
     public void setV(View v) {
@@ -48,7 +42,6 @@ public class TrainAutoCompleteAdapter extends ArrayAdapter<TrainList> {
         TextView trainview = (TextView) convertView.findViewById(R.id.train_suggestion);
         if (trainview != null)
             trainview.setText(tl.getTrainname() + "-" + tl.getTraincode());
-//        progressDialog.dismiss();
         return convertView;
     }
 
@@ -68,20 +61,16 @@ public class TrainAutoCompleteAdapter extends ArrayAdapter<TrainList> {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint != null && constraint.toString().length() > 2 && constraint.toString().length() <= 5) {
-//                progressDialog.show();
                 trainLists.clear();
                 String trainkey = constraint.toString();
-//                Toast.makeText(getContext(),trainkey,Toast.LENGTH_SHORT).show();
                 FilterResults filterResults = new FilterResults();
                 try {
                     trainLists = (ArrayList<TrainList>) new TrainSuggestionList().execute(trainkey).get();
-//                    Toast.makeText(getContext().getApplicationContext(),trainLists.toString(),Toast.LENGTH_SHORT).show();
                     filterResults.values = trainLists;
                     filterResults.count = trainLists.size();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                progressDialog.dismiss();
                 return filterResults;
             } else {
                 return new FilterResults();

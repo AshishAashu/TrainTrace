@@ -27,6 +27,7 @@ import java.util.HashMap;
 import ashish.com.myapp1.Adapter.TrainAutoCompleteAdapter;
 import ashish.com.myapp1.List.TrainList;
 import ashish.com.myapp1.Manager.ErrorManager;
+import ashish.com.myapp1.Manager.SoftKeyBoardOperation;
 import ashish.com.myapp1.Manager.UrlManager;
 import ashish.com.myapp1.Responses.PnrStatusResponseFragment;
 import ashish.com.myapp1.Responses.TrainRouteResponseFragment;
@@ -89,7 +90,6 @@ public class TrainRouteFragment extends Fragment {
                 HashMap data = new HashMap<String, String>();
                 data.put("trainno", selected_train_no);
                 String url = UrlManager.makeUrl("trainroute", data);
-//                String url = "https://jsonplaceholder.typicode.com/posts/1";
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                     url, null,
                     new Response.Listener<JSONObject>() {
@@ -131,6 +131,7 @@ public class TrainRouteFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.trainrouteresponse, fragment);
         fragmentTransaction.commit();
+        SoftKeyBoardOperation.hideSoftKeyboard(view, getActivity());
         progressDialog.dismiss();
     }
 }

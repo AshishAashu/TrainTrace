@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -39,6 +40,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import ashish.com.myapp1.Manager.MyException;
+import ashish.com.myapp1.Manager.SoftKeyBoardOperation;
 import ashish.com.myapp1.Manager.UrlManager;
 import ashish.com.myapp1.Responses.LiveTrainStatusResponseFragment;
 import ashish.com.myapp1.Responses.SeatAvailabilityResponseFragment;
@@ -108,6 +110,7 @@ public class LiveTrainFragment extends Fragment {
         livetrainsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                livetrainsubmit.setEnabled(false);
                 progressDialog.show();
                 setSubmitData();
                 url = UrlManager.makeUrl("livetrainstatus",submitdata);
@@ -173,6 +176,8 @@ public class LiveTrainFragment extends Fragment {
     }
     private String makeDate(int d,int m,int y){
         String date = d+"-";
+        if(d<10)
+            date = "0"+d+"-";
         if(m<10)
             date+= "0";
         date += m+"-";
@@ -196,6 +201,8 @@ public class LiveTrainFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.livetrainresponse, fragment);
         fragmentTransaction.commit();
+        SoftKeyBoardOperation.hideSoftKeyboard(view, getActivity());
         progressDialog.dismiss();
     }
+
 }
