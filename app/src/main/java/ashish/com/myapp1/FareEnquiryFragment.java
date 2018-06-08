@@ -2,24 +2,23 @@ package ashish.com.myapp1;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.AutoCompleteTextView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,45 +28,42 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ashish.com.myapp1.Adapter.SourceDestinationAdapter;
-import ashish.com.myapp1.Adapter.SuggestionListAdapter;
 import ashish.com.myapp1.Adapter.TrainAutoCompleteAdapter;
 import ashish.com.myapp1.List.SourceDestinationList;
-import ashish.com.myapp1.List.SuggestionList;
 import ashish.com.myapp1.List.TrainList;
 import ashish.com.myapp1.Manager.ErrorManager;
-import ashish.com.myapp1.Manager.MyException;
-import ashish.com.myapp1.Manager.ResponseCodeManager;
+import ashish.com.myapp1.Manager.SoftKeyBoardOperation;
 import ashish.com.myapp1.Manager.UrlManager;
+import ashish.com.myapp1.Responses.FareEnquiryResponseFragment;
 
-public class FairEnquiryFragment extends Fragment {
+public class FareEnquiryFragment extends Fragment {
     View view;
     AutoCompleteTextView traintxt_tv;
     EditText age;
     TextView datetxt;
     Spinner sourcestn, destinationstn, classcode, quota;
     ImageView calenderimg;
-    Button fairenquirysubmit;
-    String url,selected_class,selected_quota,selected_date,age_str,selected_train_no;
+    Button fareenquirysubmit;
+    String url, selected_class, selected_quota, selected_date, age_str, selected_train_no;
     ArrayList<SourceDestinationList> trainroutelist;
     List<TrainList> trainLists = new ArrayList<>();
     TrainAutoCompleteAdapter taca;
     SourceDestinationAdapter sda;
-    SourceDestinationList selected_source,selected_destination;
+    SourceDestinationList selected_source, selected_destination;
     ProgressDialog progressDialog;
+    FrameLayout fareenquiryresponse;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_fair_enquiry, container, false);
+        view = inflater.inflate(R.layout.activity_fare_enquiry, container, false);
         findviewbyids();
         return view;
     }
@@ -81,34 +77,37 @@ public class FairEnquiryFragment extends Fragment {
         age = (EditText) view.findViewById(R.id.agetxt);
         datetxt = (TextView) view.findViewById(R.id.datetxt);
         calenderimg = (ImageView) view.findViewById(R.id.calenderimg);
-        fairenquirysubmit = (Button) view.findViewById(R.id.fairenquirysubmit);
+        fareenquirysubmit = (Button) view.findViewById(R.id.fareenquirysubmit);
+        fareenquiryresponse = (FrameLayout) view.findViewById(R.id.fareenquiryresponse);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Please  wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        taca = new TrainAutoCompleteAdapter(getActivity().getApplicationContext(),android.R.layout.simple_dropdown_item_1line);
+        progressDialog.setCancelable(false);
+        taca = new TrainAutoCompleteAdapter(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line);
         taca.setV(view);
         traintxt_tv.setAdapter(taca);
         setOnTrainAutoCompleteListener();
         setClassQuota();
     }
 
-    private void setOnTrainAutoCompleteListener(){
+    private void setOnTrainAutoCompleteListener() {
         traintxt_tv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TrainList train = (TrainList) parent.getItemAtPosition(position);
                 selected_train_no = train.getTraincode();
+                traintxt_tv.setEnabled(false);
                 getTrainRouteArrayList();
             }
         });
     }
 
-    private void getTrainRouteArrayList(){
+    private void getTrainRouteArrayList() {
         progressDialog.show();
         HashMap<String, String> hm = new HashMap<String, String>();
         hm.put("trainno", selected_train_no);
         url = UrlManager.makeUrl("trainroute", hm);
-        Toast.makeText(getActivity(),url, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), url, Toast.LENGTH_SHORT).show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -133,21 +132,20 @@ public class FairEnquiryFragment extends Fragment {
                     }
                 } catch (Exception e) {
                     progressDialog.dismiss();
-                    Toast.makeText(getActivity(),"Plz try later...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Plz try later...", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),"Plz try later...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Plz try later...", Toast.LENGTH_SHORT).show();
             }
         });
         VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
-    private void showTrainSource(){
-        Toast.makeText(getActivity(),trainroutelist.toString(), Toast.LENGTH_SHORT).show();
+    private void showTrainSource() {
         sourcestn.setVisibility(View.VISIBLE);
         sda = new SourceDestinationAdapter(getActivity().getApplicationContext(), trainroutelist);
         sourcestn.setAdapter(sda);
@@ -155,12 +153,12 @@ public class FairEnquiryFragment extends Fragment {
         progressDialog.dismiss();
     }
 
-    private void setSourceSelectListener(){
+    private void setSourceSelectListener() {
         sourcestn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selected_source= (SourceDestinationList)parent.getItemAtPosition(position);
-                if(destinationstn.getVisibility() == View.GONE)
+                selected_source = (SourceDestinationList) parent.getItemAtPosition(position);
+                if (destinationstn.getVisibility() == View.GONE)
                     destinationstn.setVisibility(View.VISIBLE);
                 ArrayList<SourceDestinationList> showdestinationlist = new ArrayList<SourceDestinationList>();
                 boolean find = false;
@@ -185,11 +183,11 @@ public class FairEnquiryFragment extends Fragment {
         });
     }
 
-    private void setDestinationListener(){
+    private void setDestinationListener() {
         destinationstn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selected_destination = (SourceDestinationList)parent.getItemAtPosition(position);
+                selected_destination = (SourceDestinationList) parent.getItemAtPosition(position);
             }
 
             @Override
@@ -199,7 +197,7 @@ public class FairEnquiryFragment extends Fragment {
         });
     }
 
-    private void setClassQuota(){
+    private void setClassQuota() {
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.classcode, R.layout.activity_textview);
         classcode.setAdapter(adapter);
         classcode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -245,8 +243,8 @@ public class FairEnquiryFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         datetxt.setText(makeDate(dayOfMonth, (month + 1), year));
                         selected_date = datetxt.getText().toString();
-                        fairenquirysubmit.setEnabled(true);
-                        fairEnquirySubmitOnClickListener();
+                        fareenquirysubmit.setEnabled(true);
+                        fareEnquirySubmitOnClickListener();
                     }
                 }, year, month, day);
                 dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
@@ -260,8 +258,8 @@ public class FairEnquiryFragment extends Fragment {
 
     private String makeDate(int d, int m, int y) {
         String date = d + "-";
-        if(d<10)
-            date = "0"+d+"-";
+        if (d < 10)
+            date = "0" + d + "-";
         if (m < 10)
             date += "0";
         date += m + "-";
@@ -269,18 +267,54 @@ public class FairEnquiryFragment extends Fragment {
         return date;
     }
 
-    private void fairEnquirySubmitOnClickListener(){
-        fairenquirysubmit.setOnClickListener(new View.OnClickListener() {
+    private void fareEnquirySubmitOnClickListener() {
+        fareenquirysubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), mapData().toString(), Toast.LENGTH_SHORT).show();
+                progressDialog.show();
+//                Toast.makeText(getActivity(), mapData().toString(), Toast.LENGTH_SHORT).show();
+                url = UrlManager.makeUrl("fair_enquiry", mapData());
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                        url, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    if (response.getInt("response_code") == 200) {
+                                        Bundle b = new Bundle();
+                                        b.putString("data", response.toString());
+                                        FareEnquiryResponseFragment fareEnquiryResponseFragment
+                                                = new FareEnquiryResponseFragment();
+                                        fareEnquiryResponseFragment.setArguments(b);
+                                        loadFragment(fareEnquiryResponseFragment);
+//                                        progressDialog.dismiss();
+//                                        Toast.makeText(getActivity(), response.toString(),Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getActivity(),
+                                                ErrorManager.getErrorMessage(response.getInt("response_code")),
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (Exception e) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getActivity(), "plz try after some time...", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "plz try after some time...", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                VolleyCall.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
             }
         });
     }
 
-    private HashMap<String,String> mapData(){
-        HashMap<String,String> hm = new HashMap<String, String>();
-        hm.put("trainno",selected_train_no);
+    private HashMap<String, String> mapData() {
+        HashMap<String, String> hm = new HashMap<String, String>();
+        hm.put("trainno", selected_train_no);
         hm.put("source", selected_source.getCode());
         hm.put("destination", selected_destination.getCode());
         hm.put("age", age.getText().toString());
@@ -288,5 +322,14 @@ public class FairEnquiryFragment extends Fragment {
         hm.put("quota", selected_quota);
         hm.put("date", selected_date);
         return hm;
+    }
+
+    public void loadFragment(Fragment fragment){
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.fareenquiryresponse, fragment);
+        fragmentTransaction.commit();
+        SoftKeyBoardOperation.hideSoftKeyboard(view, getActivity());
+        progressDialog.dismiss();
     }
 }

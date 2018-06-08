@@ -36,8 +36,17 @@ public class UrlManager {
             case "trainbetstation":
                 url = new UrlManager().getTrainBetStationUrl(data);
                 break;
+            case "fair_enquiry":
+                url = new UrlManager().getFairEnquiryUrl(data);
         }
         return url;
+    }
+
+    private String getFairEnquiryUrl(HashMap<String,String> data){
+        return "https://api.railwayapi.com/v2/fare/train/"+data.get("trainno")+"/source/"+
+                data.get("source")+"/dest/"+data.get("destination")+"/age/"+data.get("age")+
+                "/pref/"+data.get("class")+"/quota/"+data.get("quota")+"/date/"+
+                data.get("date")+"/apikey/"+apikey+"/";
     }
 
     private String getTrainBetStationUrl(HashMap<String, String> data) {

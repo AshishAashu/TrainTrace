@@ -131,6 +131,7 @@ public class PnrFragment extends Fragment {
         SoftKeyBoardOperation.hideSoftKeyboard(view, getActivity());
         progressDialog.dismiss();
     }
+
     private Map<String,String > mapData(){
         String pnr_no = pnrno.getText().toString();
         Map<String,String> md = new HashMap<>();

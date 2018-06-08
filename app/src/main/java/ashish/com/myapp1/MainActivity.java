@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(new LiveTrainFragment());
                 }else if(id==R.id.menu_seat_availability){
                     loadFragment(new SeatAvailabilityFragment());
-                }else if(id==R.id.menu_fair_enquiry){
-                    loadFragment(new FairEnquiryFragment());
+                }else if(id==R.id.menu_fare_enquiry){
+                    loadFragment(new FareEnquiryFragment());
                 }else if(id==R.id.menu_train_bw_station){
                     loadFragment(new TrainBwtStationFragment());
                 }else if(id==R.id.menu_route){

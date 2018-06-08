@@ -24,7 +24,7 @@
                 android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/traindetail"
+                android:id="@+id/train_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -187,13 +187,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
-                android:text="Fair"
+                android:text="Fare"
                 android:gravity="center"
                 android:textColor="@color/colorDarkPink"
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/fair"
+                android:id="@+id/fare"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
